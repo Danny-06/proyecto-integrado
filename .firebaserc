@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "proyecto-integrado-65cf2": {
+      "hosting": {
+        "app": [
+          "proyecto-integrado-65cf2"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "proyecto-integrado-65cf2"
+  }
+}
