@@ -10,4 +10,4 @@ En ella cada usuario
 puede manejar su propia lista de tareas (añadir, editar, borrar) y además
 puede agregar a otros usuarios y ver sus tareas.
 
-![image](https://user-images.githubusercontent.com/72435753/161444529-2e9ce816-5152-47f9-8f53-f7543b37dee7.png)
+![image](https://user-images.githubusercontent.com/72435753/161444589-15da0931-1e84-4373-b2c9-5a659fa6d7c8.png)
