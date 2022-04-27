@@ -1,9 +1,9 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>main</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div id="app">
+    <ion-header>
+        <ion-title>Main</ion-title>
+        <ion-img class="user-pic" [src]="user && user.image ? user.image : userService.userPlaceholder"></ion-img>
+    </ion-header>
+    <div id="app-content">
 
-<ion-content>
-
-</ion-content>
+    </div>
+</div>

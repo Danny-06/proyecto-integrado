@@ -1,0 +1,49 @@
+:host {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#app-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.form {
+  height: var(--fit-content);
+  box-shadow: 0 0 10px 0 #0009;
+}
+
+.user-image {
+  align-self: center;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  outline: solid 5px #5eabb9;
+
+  box-shadow: 0 0 1.2em 0 #000;
+  background-color: #ddd;
+
+  overflow: hidden;
+}
+
+#upload-user-image > ion-button {
+  width: 100%;
+  font-size: 1.1rem;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+
+
+@media (min-width: 900px) {
+  #app-content {
+    padding-inline: 25vw;
+  }
+}

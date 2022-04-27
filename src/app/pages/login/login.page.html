@@ -1,0 +1,36 @@
+<div id="app">
+  <ion-header>
+      <ion-title>Login</ion-title>
+  </ion-header>
+  <div id="app-content">
+      <ion-img class="user-image" [src]="image ? image : 'assets/images/user-placeholder.png'"></ion-img>
+
+      <div class="form">
+
+          <ion-item id="user-email">
+              <ion-label position="floating">Email</ion-label>
+              <ion-input [(ngModel)]="email"></ion-input>
+          </ion-item>
+
+          <ion-item id="user-password">
+              <ion-label position="floating">Password</ion-label>
+              <ion-input [(ngModel)]="password" type="password"></ion-input>
+          </ion-item>
+
+      </div>
+
+      <ion-button expand="block" (click)="login()">LOGIN</ion-button>
+
+      <div class="links">
+          <a href="/register">
+              <ion-icon name="person-add"></ion-icon>
+              Register
+          </a>
+
+          <a href="/recover-password">
+              <ion-icon name="mail"></ion-icon>
+              Recover password
+          </a>
+      </div>
+  </div>
+</div>

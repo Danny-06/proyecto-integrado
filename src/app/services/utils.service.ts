@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AlertOptions } from '@ionic/angular';
 import { Observable, Observer } from 'rxjs';
 
 @Injectable({
@@ -9,17 +10,19 @@ import { Observable, Observer } from 'rxjs';
 
 export class UtilsService {
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient
+  ) {}
 
   async fetch(path: string, responseType: any = 'blob'): Promise<string | Blob | ArrayBuffer | object | []> {
     return this.http.get(path, {responseType}).toPromise()
   }
 
-  promiseWrapper(promise: Promise<any>) {
+  promiseWrapper(promise: Promise<any>): Promise<[any, any]> {
     return new Promise(resolve => {
       promise
-      .then(value => resolve({value}))
-      .catch(reason => resolve({reason}))
+      .then(value => resolve([value, null]))
+      .catch(reason => resolve([null, reason]))
     })
   }
 
@@ -42,20 +45,56 @@ export class UtilsService {
 
   }
 
+  /**
+   * Show to the user a file picker to select a file
+   */
+  requestFile(accept: string = '*/*', multiple: boolean = false): Promise<File|File[]> {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = accept
+    input.multiple = multiple
+
+    input.click()
+
+    return new Promise(resolve => {
+      input.onchange = event => {
+        if (multiple) resolve([...input.files])
+        else          resolve(input.files[0])
+      }
+    })
+  }
+
+  async alert(options: AlertOptions) {
+    const ionAlert = document.createElement('ion-alert')
+    Object.assign(ionAlert, options)
+    document.body.append(ionAlert)
+
+    ionAlert.present()
+
+    await ionAlert.onDidDismiss()
+  }
+
+
+
+  delay(time: number) {
+    return new Promise(resolve => setTimeout(resolve, time))
+  }
+
   // This function allows to target the scroller of the page to style it with JS
   async getIonContentShadowRoot() {
-    const routerOutlet = await this.elementExists('ion-router-outlet')
+    const routerOutlet = await this.waitForSelector('ion-router-outlet')
 
     await this.delay(500)
-    const ionPage = await this.elementExists('.ion-page:not([aria-hidden], .ion-page-hidden), .ion-page.ion-page-hidden[aria-hidden] ~ .ion-page.can-go-back:not([aria-hidden])', routerOutlet)
+
+    const ionPage = await this.waitForSelector('.ion-page:not([aria-hidden], .ion-page-hidden), .ion-page.ion-page-hidden[aria-hidden] ~ .ion-page.can-go-back:not([aria-hidden])', routerOutlet)
 
     if (!ionPage.shadowRoot) return ionPage.querySelector('ion-content').shadowRoot
 
-    const ionContent = await this.elementExists('ion-content', ionPage.shadowRoot)
+    const ionContent = await this.waitForSelector('ion-content', ionPage.shadowRoot)
     return ionContent.shadowRoot
   }
 
-  elementExists(selector, doc: Document | DocumentFragment | HTMLElement = document): Promise<HTMLDivElement> {
+  waitForSelector(selector: string, doc: Document | DocumentFragment | Element = document): Promise<Element> {
     function checkElement(selector, resolve) {
       const element = doc.querySelector(selector)
       if (element) return resolve(element)
@@ -68,12 +107,8 @@ export class UtilsService {
     })
   }
 
-  delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time))
-  }
 
-
-  elementExistsAll(selector, childrenNumber, doc: Document | DocumentFragment | HTMLElement = document) {
+  waitForSelectorAll(selector: string, childrenNumber: number, doc: Document | DocumentFragment | Element = document) {
     if (typeof childrenNumber !== 'number' || childrenNumber <= 0) throw new TypeError('parameter 2 must be a positive number different from 0')
   
     function checkElements(selector, resolve) {
