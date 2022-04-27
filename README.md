@@ -15,3 +15,8 @@ puede agregar a otros usuarios y ver sus tareas.
 <img width="250" src="https://user-images.githubusercontent.com/72435753/161446177-64234e1c-d125-40c8-885c-e875912ab1c0.png">
 
 <img width="250" src="https://user-images.githubusercontent.com/72435753/161447674-e6789a0a-2c0b-4689-ae8a-924d4639d8dc.png">
+
+
+## Registro
+
+Registro y Login completados.
