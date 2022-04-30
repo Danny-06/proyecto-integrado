@@ -4,15 +4,145 @@
   height: 100%;
 }
 
-
-.user-pic {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  outline: solid 3px #5eabb9;
-  box-shadow: 0 0 10px 0 #000;
-  background-color: #ddd;
-
+#app-content {
+  padding: 0;
   overflow: hidden;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  padding-bottom: 7rem;
+
+  overflow: auto;
+}
+
+.overlay-add-task-container {
+  position: absolute;
+  inset: 0;
+  padding: 1rem;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.tasks {
+  width: 100%;
+  min-height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
+
+  font-size: 1.1rem;
+}
+
+.no-tasks {
+  width: var(--fit-content);
+
+  margin: auto;
+
+  background-color: #06f;
+  border-radius: 1em;
+  padding: 1rem;
+
+  box-shadow:
+  0 0 0.8em 0 #0009,
+  0 0 0.5em 0 #fff9 inset
+  ;
+
+  font-size: 1.2rem;
+}
+
+.task {
+  width: 100%;
+  display: grid;
+}
+
+.task > .wrapper1 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.7em 1em;
+
+  background-color: #06f;
+  border-radius: 1em;
+  box-shadow:
+  0 0 0.8em 0 #0009,
+  0 0 0.5em 0 #fff9 inset
+  ;
+
+  font-size: 1.2rem;
   cursor: pointer;
+
+  transition:
+  box-shadow 0.3s,
+  background-color 0.3s
+  ;
+}
+
+.task > .wrapper1:active {
+  box-shadow:
+  0 0 1em 0 #0009,
+  0 0 1em 0 #000c inset
+  ;
+
+  background-color: #0c1830;
+}
+
+.task > .wrapper1,
+.task > .wrapper2 {
+  grid-row:    1 / span 1;
+  grid-column: 1 / span 1;
+}
+
+.task > .wrapper2 {
+  display: flex;
+  align-items: center;
+  padding: 0.7em 1em;
+}
+
+
+.task-title {
+
+}
+
+.task-buttons {
+  display: flex;
+  gap: 0.4em;
+
+  margin-left: auto;
+
+  font-size: 1.2em;
+}
+
+.task-buttons > ion-icon {
+  box-shadow:
+  0 0 0.3em 0 #adfeff inset,
+  0 0 0.3em 0 #0009
+  ;
+  background-color: #0005;
+  border-radius: 50%;
+  padding: 0.3em;
+
+  font-size: 1.3em;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.task-buttons > ion-icon:active {
+  box-shadow: 0 0 1em 0 #0f1f2c inset;
+}
+
+
+.edit {
+  color: #f1900d;
+}
+
+.delete {
+  color: #f00;
 }

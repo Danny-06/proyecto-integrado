@@ -1,0 +1,23 @@
+<div id="app">
+    <ion-header>
+        <ion-title>Add Task</ion-title>
+        <ion-menu-button menu="main-menu">
+            <ion-img class="user-pic" [src]="user && user.image ? user.image : userService.userPlaceholder"></ion-img>
+        </ion-menu-button>
+    </ion-header>
+    <div id="app-content">
+        <ion-input class="task-title" type="text" placeholder="Title" [(ngModel)]="task.title"></ion-input>
+        <ion-textarea class="task-description" placeholder="Description (optional)" [(ngModel)]="task.description"></ion-textarea>
+
+        <ion-button class="add-task" (click)="addTask()">Add Task</ion-button>
+
+
+        <h2>Optional</h2>
+
+        <ion-button class="add-image" (click)="addImage()">Add Image</ion-button>
+
+        <div class="images">
+            <ion-img class="image" *ngFor="let image of task.images" [src]="image.src"></ion-img>
+        </div>
+    </div>
+</div>

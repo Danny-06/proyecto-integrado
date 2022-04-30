@@ -1,0 +1,23 @@
+<ion-menu side="end" menuId="main-menu" contentId="main">
+    <ion-header>
+        <ion-title>Side Menu</ion-title>
+    </ion-header>
+    <ion-list>
+        <ion-item href="/main">
+            <ion-icon slot="start" name="home"></ion-icon>
+            Home
+        </ion-item>
+        <ion-item href="/user-details">
+            <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+            Profile
+        </ion-item>
+        <ion-item href="/recover-password">
+            <ion-icon slot="start" name="mail-outline"></ion-icon>
+            Recover Password
+        </ion-item>
+        <ion-item (click)="authService.logout()" href="">
+            <ion-icon slot="start" name="power-outline"></ion-icon>
+            Log out
+        </ion-item>
+    </ion-list>
+</ion-menu>

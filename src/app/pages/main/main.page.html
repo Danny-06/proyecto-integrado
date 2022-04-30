@@ -1,9 +1,30 @@
 <div id="app">
     <ion-header>
         <ion-title>Main</ion-title>
-        <ion-img class="user-pic" [src]="user && user.image ? user.image : userService.userPlaceholder"></ion-img>
+        <ion-menu-button menu="main-menu">
+            <ion-img class="user-pic" [src]="user && user.image ? user.image : userService.userPlaceholder"></ion-img>
+        </ion-menu-button>
     </ion-header>
     <div id="app-content">
-
+        <div class="content">
+            <div class="tasks">
+                <div class="no-tasks" *ngIf="tasks.length === 0">There's no tasks yet</div>
+                <div class="task" *ngFor="let task of tasks">
+                    <div class="wrapper1">
+                        <div class="task-title">{{ task.title }}</div>
+                    </div>
+                    <div class="wrapper2 no-self-events">
+                        <div class="task-buttons">
+                            <ion-icon class="edit"   name="pencil-outline"></ion-icon>
+                            <ion-icon class="delete" name="trash-outline" (click)="deleteTask(task)"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Float button -->
+        <div class="overlay-add-task-container no-self-events">
+            <ion-fab-button href="/add-task" class="add-task">+</ion-fab-button>
+        </div>
     </div>
 </div>

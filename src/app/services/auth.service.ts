@@ -6,7 +6,7 @@ import {
   deleteUser,
   createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail,
   User as AuthUser,
-  UserCredential, getAuth
+  UserCredential
 } from '@angular/fire/auth';
 
 import { UtilsService } from './utils.service'
@@ -19,10 +19,16 @@ export class AuthService {
 
   dataOptions = {idField: 'id'}
 
-  constructor(private auth: Auth, private utils: UtilsService) {}
+  currentUser: AuthUser
 
-  getCurrentUser(): AuthUser {
-    return getAuth().currentUser
+  constructor(private auth: Auth, private utils: UtilsService) {
+    this.auth.onAuthStateChanged(authUser => this.currentUser = authUser)
+  }
+
+  getCurrentAuthUser(): Promise<AuthUser> {
+    return new Promise(resolve => {
+      this.auth.onAuthStateChanged(() => resolve(this.auth.currentUser))
+    })
   }
 
   logout() {
@@ -50,7 +56,7 @@ export class AuthService {
   }
 
   removeUser() {
-    deleteUser(this.getCurrentUser())
+    return deleteUser(this.currentUser)
   }
 
   resetPassword(email: string): Promise<void> {

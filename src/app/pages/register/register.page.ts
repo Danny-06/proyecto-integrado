@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseError } from '@angular/fire/app';
 import { UserCredential } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { AlertController, AlertOptions } from '@ionic/angular';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { FireStorageService } from 'src/app/services/fire-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { User as AuthUser } from '@angular/fire/auth'
+
 
 @Component({
   selector: 'app-register',
@@ -33,7 +34,7 @@ export class RegisterPage implements OnInit {
     win[this.constructor.name] = this
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.name = 'Danny'
     this.email = 'danny@gmail.com'
     this.password = '123456'
@@ -52,9 +53,11 @@ export class RegisterPage implements OnInit {
       return
     }
 
-    if (this.image === 'assets/images/loading.gif') this.image = ''
+    if (this.image === this.userService.loadingImage) this.image = ''
 
-    const {uid} = this.authService.getCurrentUser()
+    const currentUser: AuthUser = await this.authService.getCurrentAuthUser()
+
+    const {uid} = currentUser
     const user = {id: uid, name: this.name, image: this.image} as User
     this.userService.addUser(user)
 
@@ -66,7 +69,7 @@ export class RegisterPage implements OnInit {
   async handleImageFile() {
     const file = await this.utils.requestFile() as File
 
-    this.image = 'assets/images/loading.gif'
+    this.image = this.userService.loadingImage
 
     this.firestorage.uploadFile(file, 'images', `${file.name} - ${Date.now()}`)
     .then(imageURL => this.image = imageURL)

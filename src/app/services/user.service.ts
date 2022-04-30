@@ -4,46 +4,53 @@ import { AuthService } from './auth.service';
 import { UtilsService } from './utils.service';
 import { User } from '../interfaces/user'
 import { Task } from '../interfaces/task';
-import { User as AuthUser } from '@angular/fire/auth'
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class UserService {
+  
+  loadingImage = 'assets/images/loading.gif'
 
   constructor(
     private firestore: Firestore,
     private authService: AuthService,
     private utils: UtilsService,
-  ) {}
+    private router: Router
+  ) {
+    this.authService.getCurrentAuthUser()
+    .then(currentUser => {
+      this.tasksPath = `${this.usersPath}/${currentUser?.uid}/tasks`
+    })
+  }
 
-  // loadingImage = 'assets/animals/loading.gif'
-
-  get authUser(): AuthUser { return this.authService.getCurrentUser() }
+  tasksPath: string
 
   usersPath = 'users'
-  tasksPath = `${this.usersPath}/${this.authUser?.uid}/tasks`
 
   userPlaceholder = 'assets/images/user-placeholder.png'
 
   dataOptions = {idField: 'id'}
 
 
-  getUser(): Promise<User> {
-    if (!this.authUser) return null
+  // User
 
-    const docRef = doc(this.firestore, `${this.usersPath}/${this.authUser.uid}`)
+  async getUser(): Promise<User> {
+    const currentUser = await this.authService.getCurrentAuthUser()
+
+    if (!currentUser) return null
+
+    const docRef = doc(this.firestore, `${this.usersPath}/${currentUser.uid}`)
     const observableData = docData(docRef, this.dataOptions)
 
-    return this.utils.observableToPromise(observableData)
+    const user = await this.utils.observableToPromise(observableData)
+
+    return user
   }
 
   addUser(user: User) {
-    // const collectionRef = collection(this.firestore, this.usersPath)
-    // return addDoc(collectionRef, user)
-
-    // Set Custom id to match Document ID to field ID
     const docRef = doc(this.firestore, `${this.usersPath}/${user.id}`)
     return setDoc(docRef, user)
   }
@@ -52,6 +59,28 @@ export class UserService {
     const docRef = doc(this.firestore, `${this.usersPath}/${user.id}`)
     return setDoc(docRef, user)
   }
+
+  // If user is not stored in the database
+  // show an 'ion-alert'
+  // then delete its account and redirect
+  async handleUserDoesNotExists() {
+    await this.userDoesNotExistAlert()
+
+    this.authService.removeUser()
+    this.router.navigateByUrl('/register')
+  }
+
+  userDoesNotExistAlert() {
+    return this.utils.alert({
+      header: 'Error',
+      subHeader: 'User does not exist in the database.',
+      message: 'The account associated will be remove and you will be redirected to register page.',
+      buttons: ['Ok']
+    })
+  }
+
+
+  // Task
 
   addTask(task: Task) {
     const collectionRef = collection(this.firestore, this.tasksPath)
@@ -64,10 +93,15 @@ export class UserService {
   }
 
   getTasks(): Promise<Task[]> {
-    const docRef = doc(this.firestore, `${this.tasksPath}`)
-    const observableData = docData(docRef, this.dataOptions)
+    const collectionRef = collection(this.firestore, `${this.tasksPath}`)
+    const observableData = collectionData(collectionRef, this.dataOptions)
 
     return this.utils.observableToPromise(observableData)
+  }
+
+  async deleteTask(task: Task) {
+    const docRef = doc(this.firestore, `${this.tasksPath}/${task.id}`)
+    return deleteDoc(docRef)
   }
 
 }

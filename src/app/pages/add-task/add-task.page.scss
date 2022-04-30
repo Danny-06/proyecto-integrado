@@ -1,0 +1,53 @@
+:host {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#app-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+#app-content > * {
+  flex-shrink: 0;
+}
+
+ion-input.error {
+  outline: solid 2px #f00c;
+  background-color: #f003;
+}
+
+
+.add-task::part(native) {
+  font-size: 1.2rem;
+  padding: 0.5em 0.8em;
+}
+
+.add-image::part(native) {
+
+}
+
+.images {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.image {
+  max-width: 400px;
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  // background-color: #345468;
+  background-color: #2b363d44;
+  box-shadow: 0 0 0.6em 0 #0009;
+  border-radius: 1em;
+
+  overflow: hidden;
+}

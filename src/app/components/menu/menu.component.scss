@@ -1,0 +1,22 @@
+:host {
+  --ion-background-color: #24568e;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+
+ion-list {
+  background: #1a3651;
+}
+
+ion-item {
+  --background: #004c73;
+}
+
+ion-item:not(:last-child) {
+  border-bottom: solid 2px #2227;
+}

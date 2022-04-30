@@ -10,6 +10,9 @@ import { AppRoutingModule } from './app-routing.module';
 // Http provider for HttpClient
 import { HttpClientModule } from '@angular/common/http';
 
+// Side Menu Component
+import { MenuComponent } from './components/menu/menu.component';
+
 // Firebase
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -23,7 +26,10 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    MenuComponent
+  ],
   entryComponents: [],
   imports: [
     BrowserModule,

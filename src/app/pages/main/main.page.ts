@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ViewWillEnter } from '@ionic/angular';
+import { Task } from 'src/app/interfaces/task';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
@@ -18,6 +19,8 @@ export class MainPage implements ViewWillEnter {
 
   user: User
 
+  tasks: Task[] = []
+
   constructor(
     public userService: UserService,
     private authService: AuthService,
@@ -29,24 +32,31 @@ export class MainPage implements ViewWillEnter {
   }
 
   async ionViewWillEnter() {
-    this.user = await this.userService.getUser()
+    this.user  = await this.userService.getUser()
+    this.tasks = await this.userService.getTasks()
 
-    // If user is not stored in the database
-    // then delete its account and redirect
     if (!this.user) {
-      await this.handleUserDoesNotExist()
-
-      this.authService.removeUser()
-      this.router.navigateByUrl('/register')
+      await this.userService.handleUserDoesNotExists()
       return
     }
   }
 
-  handleUserDoesNotExist() {
-    return this.utils.alert({
-      header: 'Error',
-      subHeader: 'User does not exist in the database.',
-      message: 'The account associated will be remove and you will be redirected to register page.'
+  async deleteTask(task: Task) {
+    await this.utils.alert({
+      header: 'Task Delete',
+      message: 'Are you sure you want to delete this task?',
+      buttons: [
+        {
+          text: 'Ok',
+          id: 'confirm-button',
+          handler: async () => {
+            await this.userService.deleteTask(task)
+            this.tasks = await this.userService.getTasks()
+          }
+        },
+        {text: 'Cancel', role: 'Cancel'}
+      ],
+
     })
   }
 

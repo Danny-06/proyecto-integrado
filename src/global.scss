@@ -172,9 +172,38 @@ img, ion-img {
   -webkit-user-drag: none;
 }
 
+.no-self-events {
+  pointer-events: none;
+}
+
+.no-self-events > * {
+  pointer-events: auto;
+}
+
+
+
+/* User profile picture */
+
+.user-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  outline: solid 3px #5eabb9;
+  box-shadow: 0 0 10px 0 #000;
+  background-color: #ddd;
+
+  overflow: hidden;
+  cursor: pointer;
+}
 
 
 /* Set defaults for ionic components */
+
+:root * {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
 
 app-root,
 ion-app,
@@ -182,6 +211,10 @@ ion-router-outlet {
   position: relative;
   width: 100%;
   height: 100%;
+}
+
+ion-content {
+  --background: transparent;
 }
 
 // ion-header ion-toolbar:first-of-type {}
@@ -192,7 +225,8 @@ ion-header {
   padding: 0.5rem 0.8rem;
 }
 
-ion-title {
+:root ion-title {
+  flex-grow: 1;
   padding: 0;
 }
 
@@ -204,6 +238,10 @@ ion-header, ion-item {
 
 ion-toolbar, ion-item {
   color: inherit;
+}
+
+ion-item {
+  --inner-border-width: 0;
 }
 
 ion-img {
@@ -227,6 +265,34 @@ ion-button {
 ion-button::part(native) {
   padding: 0.5em;
 }
+
+ion-fab-button {
+  font-size: 3rem;
+}
+
+/* Remove defaults to allow appending other elements */
+
+ion-menu::part(container) {
+  justify-content: flex-start;
+}
+
+ion-menu-button {
+  display: block;
+  width: auto;
+  height: auto;
+  border-radius: unset;
+  font-size: unset;
+}
+
+ion-menu-button::part(native) {
+  padding: 0;
+  overflow: visible;
+}
+
+ion-icon {
+  color: #ffffff8a;
+}
+
 
 
 /* Custom Theme */
@@ -259,7 +325,74 @@ input[type="file"]::file-selector-button:active {
 
 
 
+ion-textarea {
+  height: 8rem;
+}
 
+ion-textarea > .textarea-wrapper,
+ion-textarea > .textarea-wrapper > textarea {
+  height: 100%;
+}
+
+ion-textarea > .textarea-wrapper > textarea.native-textarea.sc-ion-textarea-md {
+  padding: 0;
+}
+
+ion-textarea {
+  padding: 1em;
+}
+
+:root ion-input,
+:root ion-textarea {
+  position: relative;
+  background-color: #0c4772;
+  box-shadow: 0 0 0.5em 0 #1119;
+
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  --padding-top: 1em;
+  --padding-bottom: 1rem;
+
+  transition: background-color 0.3s;
+}
+
+:root ion-input:focus-within,
+:root ion-textarea:focus-within {
+  background-color: #061e31;
+}
+
+
+:root ion-input::after,
+:root ion-textarea::after {
+  content: '';
+
+  display: block;
+  width: 0%;
+  height: 2px;
+  margin: auto;
+
+  position: absolute;
+  bottom: 0;
+  left: auto;
+  right: 0;
+
+  background-color: #00a7af;
+
+  transition: width 0.3s;
+}
+
+:root ion-input:focus-within::after,
+:root ion-textarea:focus-within::after {
+  width: 100%;
+  left: 0;
+  right: auto;
+}
+
+:root ion-item > ion-input,
+:root ion-item > ion-input:focus-within,
+:root ion-item > ion-input::after {
+  all: unset;
+}
 
 
 
