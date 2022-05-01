@@ -40,6 +40,14 @@ const routes: Routes = [
   {
     path: 'user-details',
     loadChildren: () => import('./pages/user-details/user-details.module').then( m => m.UserDetailsPageModule)
+  },
+  {
+    path: 'edit-task/:id',
+    loadChildren: () => import('./pages/edit-task/edit-task.module').then( m => m.EditTaskPageModule)
+  },
+  {
+    path: 'view-task/:id',
+    loadChildren: () => import('./pages/view-task/view-task.module').then( m => m.ViewTaskPageModule)
   }
 ];
 

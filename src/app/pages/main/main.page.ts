@@ -33,16 +33,25 @@ export class MainPage implements ViewWillEnter {
 
   async ionViewWillEnter() {
     this.user  = await this.userService.getUser()
-    this.tasks = await this.userService.getTasks()
 
     if (!this.user) {
       await this.userService.handleUserDoesNotExists()
       return
     }
+
+    this.tasks = await this.userService.getTasks()
   }
 
-  async deleteTask(task: Task) {
-    await this.utils.alert({
+  viewTask(task: Task) {
+    this.router.navigateByUrl(`/view-task/${task.id}`)
+  }
+
+  editTask(task: Task) {
+    this.router.navigateByUrl(`/edit-task/${task.id}`)
+  }
+
+  deleteTask(task: Task) {
+    return this.utils.alert({
       header: 'Task Delete',
       message: 'Are you sure you want to delete this task?',
       buttons: [

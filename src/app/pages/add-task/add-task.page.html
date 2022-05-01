@@ -12,12 +12,14 @@
         <ion-button class="add-task" (click)="addTask()">Add Task</ion-button>
 
 
-        <h2>Optional</h2>
-
-        <ion-button class="add-image" (click)="addImage()">Add Image</ion-button>
-
-        <div class="images">
-            <ion-img class="image" *ngFor="let image of task.images" [src]="image.src"></ion-img>
+        <ion-button class="btn-optional">Show Optional</ion-button>
+        <div class="optional" hidden>
+            <ion-button class="add-image" (click)="addImage()">Add Image</ion-button>
+    
+            <div class="images">
+                <ion-img class="image" *ngFor="let image of task.images" [src]="image.src" [ngStyle]="{objectFit: image.objectFit}"></ion-img>
+            </div>
         </div>
+
     </div>
 </div>

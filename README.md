@@ -21,3 +21,4 @@ puede agregar a otros usuarios y ver sus tareas.
 # Semana 1
 Registro y Login completados.<br>
 Pagina de listado y pagina de crear tareas.
+Visualizar Tareas.

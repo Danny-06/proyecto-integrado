@@ -9,14 +9,14 @@
         <div class="content">
             <div class="tasks">
                 <div class="no-tasks" *ngIf="tasks.length === 0">There's no tasks yet</div>
-                <div class="task" *ngFor="let task of tasks">
+                <div class="task" *ngFor="let task of tasks" (click)="viewTask(task)">
                     <div class="wrapper1">
                         <div class="task-title">{{ task.title }}</div>
                     </div>
                     <div class="wrapper2 no-self-events">
-                        <div class="task-buttons">
-                            <ion-icon class="edit"   name="pencil-outline"></ion-icon>
-                            <ion-icon class="delete" name="trash-outline" (click)="deleteTask(task)"></ion-icon>
+                        <div class="task-buttons" (click)="$event.stopPropagation()">
+                            <ion-icon class="edit"   name="pencil-outline" (click)="editTask(task);"></ion-icon>
+                            <ion-icon class="delete" name="trash-outline"  (click)="deleteTask(task)"></ion-icon>
                         </div>
                     </div>
                 </div>

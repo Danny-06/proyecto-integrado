@@ -217,7 +217,9 @@ ion-content {
   --background: transparent;
 }
 
-// ion-header ion-toolbar:first-of-type {}
+ion-header ion-toolbar:first-of-type {
+  --background: transparent;
+}
 
 ion-header {
   display: flex;
@@ -291,6 +293,12 @@ ion-menu-button::part(native) {
 
 ion-icon {
   color: #ffffff8a;
+}
+
+
+ion-alert h2,
+ion-alert span {
+  user-select: none;
 }
 
 

@@ -5,6 +5,7 @@ import { UtilsService } from './utils.service';
 import { User } from '../interfaces/user'
 import { Task } from '../interfaces/task';
 import { Router } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -18,15 +19,20 @@ export class UserService {
     private firestore: Firestore,
     private authService: AuthService,
     private utils: UtilsService,
-    private router: Router
+    private router: Router,
+    private auth: Auth
   ) {
-    this.authService.getCurrentAuthUser()
-    .then(currentUser => {
-      this.tasksPath = `${this.usersPath}/${currentUser?.uid}/tasks`
+
+    this.auth.onAuthStateChanged(() => {
+      const currentUser = this.auth.currentUser
+      if (!currentUser) return
+
+      this.tasksPath = `${this.usersPath}/${currentUser.uid}/tasks`
     })
+
   }
 
-  tasksPath: string
+  tasksPath: string = ''
 
   usersPath = 'users'
 
