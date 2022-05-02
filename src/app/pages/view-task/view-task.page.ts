@@ -38,6 +38,14 @@ export class ViewTaskPage implements ViewWillEnter {
 
     const tasks = await this.userService.getTasks()
     this.task   = tasks.filter(t => t.id === taskId)[0]
+
+    if (!this.task) {
+      // Avoid reference error in template
+      this.task = {title: '', description: '', images: []} as Task
+
+      this.handleTaskDoesNotExist()
+      return
+    }
   }
 
   async handleTaskDoesNotExist() {

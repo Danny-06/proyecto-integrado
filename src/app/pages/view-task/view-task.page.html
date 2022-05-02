@@ -1,6 +1,6 @@
 <div id="app">
     <ion-header>
-        <ion-title>Add Task</ion-title>
+        <ion-title>View Task</ion-title>
         <ion-menu-button menu="main-menu">
             <ion-img class="user-pic" [src]="user && user.image ? user.image : userService.userPlaceholder"></ion-img>
         </ion-menu-button>
@@ -11,7 +11,7 @@
             <div class="task-description">{{ task.description }}</div>
         </div>
 
-        <h1 *ngIf="task.images?.length">Images</h1>
+        <h1 class="images-title" *ngIf="task.images?.length">Images</h1>
 
         <div class="images">
             <ion-img class="image" *ngFor="let image of task.images" [src]="image.src" [ngStyle]="{objectFit: image.objectFit}"></ion-img>

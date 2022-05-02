@@ -22,3 +22,4 @@ puede agregar a otros usuarios y ver sus tareas.
 Registro y Login completados.<br>
 Pagina de listado y pagina de crear tareas.
 Visualizar Tareas.
+Editar Tareas. Borrar imágenes.

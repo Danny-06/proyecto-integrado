@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ViewWillEnter } from '@ionic/angular';
+import { ViewDidEnter, ViewWillEnter } from '@ionic/angular';
 import { Image } from 'src/app/interfaces/image';
 import { Task } from 'src/app/interfaces/task';
 import { User } from 'src/app/interfaces/user';
@@ -14,7 +14,9 @@ import { UtilsService } from 'src/app/services/utils.service';
   styleUrls: ['./add-task.page.scss'],
 })
 
-export class AddTaskPage implements OnInit, ViewWillEnter {
+export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
+
+  componentLoaded: boolean = false
 
   user: User
 
@@ -30,7 +32,18 @@ export class AddTaskPage implements OnInit, ViewWillEnter {
     win[this.constructor.name] = this
   }
 
-  ngOnInit() {
+  async ionViewWillEnter() {
+    this.user = await this.userService.getUser()
+
+    if (!this.user) return this.userService.handleUserDoesNotExists()
+  }
+
+  ionViewDidEnter() {
+    if (this.componentLoaded) return
+
+    this.componentLoaded = true
+
+    // Show optional images when clicking the 'Show Optional' button
     const btnOptional = document.querySelector('.btn-optional') as HTMLElement
     const optional = document.querySelector('.optional') as HTMLDivElement
 
@@ -38,16 +51,12 @@ export class AddTaskPage implements OnInit, ViewWillEnter {
       if (optional.hidden) optional.hidden = false
       else                 optional.hidden = true
     })
-  }
 
-  async ionViewWillEnter() {
-    this.user = await this.userService.getUser()
-
-    if (!this.user) return this.userService.handleUserDoesNotExists()
-
+    // Remove red highligh in input task-name on focus
     const inputTitle = document.querySelector('.task-title') as HTMLIonInputElement
     inputTitle.firstChild.addEventListener('focus', event => inputTitle.classList.remove('error'))
 
+    // Toggle between 'cover' and 'contain' values of 'object-fit' in 'task-images' on click
     window.addEventListener('click', event => {
       const ionImg = event.target as HTMLIonImgElement
       if (!ionImg.matches('ion-img.image')) return
@@ -56,13 +65,23 @@ export class AddTaskPage implements OnInit, ViewWillEnter {
       if (imgObj.objectFit === 'cover') imgObj.objectFit = 'contain'
       else                              imgObj.objectFit = 'cover'
     })
+
+    // Remove images when clicking on the 'X' button
+    window.addEventListener('click', event => {
+      const removeBtn = event.target as HTMLDivElement
+      if (!removeBtn.matches('.remove-img')) return
+
+      const ionImg = removeBtn.parentElement.querySelector('ion-img.image') as HTMLIonImgElement
+
+      this.task.images = this.task.images.filter(img => img.src !== ionImg.src)
+    })
   }
 
   async addTask() {
     if (this.task.title === '') {
       await this.emptyTitleAlert()
 
-      const inputTitle = document.querySelector('.task-title') as HTMLIonInputElement
+      const inputTitle = document.querySelector('.task-title') as HTMLIonButtonElement
       inputTitle.classList.add('error')
 
       return

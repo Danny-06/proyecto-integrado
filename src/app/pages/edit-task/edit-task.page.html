@@ -1,9 +1,29 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>edit-task</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div id="app">
+    <ion-header>
+        <ion-title>Edit Task</ion-title>
+        <ion-menu-button menu="main-menu">
+            <ion-img class="user-pic" [src]="user && user.image ? user.image : userService.userPlaceholder"></ion-img>
+        </ion-menu-button>
+    </ion-header>
+    <div id="app-content">
+        <ion-input class="task-title" type="text" placeholder="Title" [(ngModel)]="task.title"></ion-input>
+        <ion-textarea class="task-description" placeholder="Description (optional)" [(ngModel)]="task.description">
+        </ion-textarea>
 
-<ion-content>
+        <ion-button class="add-task" (click)="updateTask()">Update Task</ion-button>
 
-</ion-content>
+
+        <ion-button class="btn-optional">Show Optional</ion-button>
+        <div class="optional" hidden>
+            <ion-button class="add-image" (click)="addImage()">Add Image</ion-button>
+
+            <div class="images">
+                <div class="img-wrapper" *ngFor="let image of task.images">
+                    <ion-img class="image" [src]="image.src" [ngStyle]="{objectFit: image.objectFit}"></ion-img>
+                    <ion-icon class="remove-img" name="close-outline"></ion-icon>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

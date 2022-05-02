@@ -26,6 +26,21 @@ export class UtilsService {
     })
   }
 
+  promiseDocumentLoad(doc: Document|HTMLIFrameElement) {
+    return new Promise((resolve, reject) => {
+      if (doc instanceof HTMLIFrameElement) {
+        if (doc.contentDocument == null) return reject(new TypeError(`Cannot access document from iframe element`))
+        if (doc.contentDocument.readyState === 'complete') return resolve(doc)
+      }
+      else {
+        if (!(doc instanceof Document)) return reject(new TypeError(`param 1 must be an instance of HTMLIframeElement or Document`))
+        if (doc.readyState === 'complete') return resolve(doc)
+      }
+  
+      doc.addEventListener('load', event => resolve(doc), {once: true})
+    })
+  }
+
   observableToPromise(observable: Observable<any>, multipleValues: boolean = false): Promise<any> {
 
     return new Promise((resolve, reject) => {

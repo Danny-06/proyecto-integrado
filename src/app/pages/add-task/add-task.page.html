@@ -17,7 +17,10 @@
             <ion-button class="add-image" (click)="addImage()">Add Image</ion-button>
     
             <div class="images">
-                <ion-img class="image" *ngFor="let image of task.images" [src]="image.src" [ngStyle]="{objectFit: image.objectFit}"></ion-img>
+                <div class="img-wrapper" *ngFor="let image of task.images">
+                    <ion-img class="image" [src]="image.src" [ngStyle]="{objectFit: image.objectFit}"></ion-img>
+                    <ion-icon class="remove-img" name="close-outline"></ion-icon>
+                </div>
             </div>
         </div>
 
