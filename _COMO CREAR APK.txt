@@ -2,13 +2,13 @@ npm install @capacitor/android --force
 
 ionic capacitor add android
 
+-- Cada vez que se realicen cambios hay que borrar el proyecto de Android Studio
+   que se cree y volver a crearlo utilizando estos comandos
+
+ionic capacitor sync android
+
 npx cap add android
 
 
--- Si ocurre el siguiente error al crear el proyecto de Android Studio
-   hay que ejecutar el comando de abajo, borrar el proyecto de Android Studio y
-   volver a crearlos
 
 https://stackoverflow.com/questions/63267827/capacitor-settings-gradle-as-it-does-not-exist
-
-ionic capacitor sync android
