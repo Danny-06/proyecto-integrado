@@ -35,9 +35,9 @@ export class RegisterPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.name = 'Danny'
-    this.email = 'danny@gmail.com'
-    this.password = '123456'
+    // this.name = 'Danny'
+    // this.email = 'danny@gmail.com'
+    // this.password = '123456'
   }
 
   async register() {
