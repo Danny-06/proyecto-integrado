@@ -1,5 +1,10 @@
 # Task Manager
 
+<a href="https://github.com/Danny-06/proyecto-integrado/raw/master/TaskManager.apk">
+  Haz click aquí para descargar la APK
+</a>
+
+
 ## Anteproyecto
 
 El proyecto será realizado con Ionic/Angular.
@@ -23,3 +28,5 @@ Registro y Login completados.<br>
 Pagina de listado y pagina de crear tareas.
 Visualizar Tareas.<br>
 Editar Tareas. Borrar imágenes.
+
+Enlace de la APK.
