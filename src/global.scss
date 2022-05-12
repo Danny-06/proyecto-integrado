@@ -272,6 +272,10 @@ ion-fab-button {
   font-size: 3rem;
 }
 
+ion-back-button {
+  display: block;
+}
+
 /* Remove defaults to allow appending other elements */
 
 ion-menu::part(container) {

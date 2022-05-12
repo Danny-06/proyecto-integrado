@@ -1,0 +1,14 @@
+npm install @capacitor/android --force
+
+ionic capacitor add android
+
+npx cap add android
+
+
+-- Si ocurre el siguiente error al crear el proyecto de Android Studio
+   hay que ejecutar el comando de abajo, borrar el proyecto de Android Studio y
+   volver a crearlos
+
+https://stackoverflow.com/questions/63267827/capacitor-settings-gradle-as-it-does-not-exist
+
+ionic capacitor sync android

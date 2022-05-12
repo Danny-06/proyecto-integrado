@@ -50,6 +50,10 @@ export class MainPage implements ViewWillEnter {
     this.router.navigateByUrl(`/edit-task/${task.id}`)
   }
 
+  addTask() {
+    this.router.navigateByUrl('/add-task')
+  }
+
   deleteTask(task: Task) {
     return this.utils.alert({
       header: 'Task Delete',
