@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AlertOptions } from '@ionic/angular';
 import { Observable, Observer } from 'rxjs';
+import { PublicPromise } from '../interfaces/public-promise';
 
 @Injectable({
   providedIn: 'root'
 })
-
 
 export class UtilsService {
 
@@ -74,9 +74,35 @@ export class UtilsService {
     await ionAlert.onDidDismiss()
   }
 
+  createPublicPromise(): PublicPromise<any> {
+    let resolve
+    let reject
 
+    const promise = new Promise((resolveFunction, rejectFunction) => {
+      resolve = resolveFunction
+      reject = rejectFunction
+    })
 
-  delay(time: number) {
+    const publicPromise: PublicPromise<any> = {
+      resolve,
+      reject,
+
+      then(onFulfilled?, onRejected?) {
+        return promise.then(onFulfilled, onRejected)
+      },
+      catch(onRejected?) {
+        return promise.catch(onRejected)
+      },
+      finally(onFinally?) {
+        return promise.finally(onFinally)
+      },
+      [Symbol.toStringTag]: 'PublicPromise'
+    }
+
+    return publicPromise
+  }
+
+  delay(time: number = 0): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, time))
   }
 

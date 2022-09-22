@@ -17,6 +17,8 @@ export class ViewTaskPage implements ViewWillEnter {
 
   task: Task = {} as Task
 
+  taskDate: string
+
   constructor(
     private utils: UtilsService,
     private router: Router,
@@ -24,7 +26,7 @@ export class ViewTaskPage implements ViewWillEnter {
     public userService: UserService
   ) {
     const win: any = window
-    win[this.constructor.name] = this
+    win.pages[this.constructor.name] = this
   }
 
   async ionViewWillEnter() {
@@ -38,6 +40,8 @@ export class ViewTaskPage implements ViewWillEnter {
 
     const tasks = await this.userService.getTasks()
     this.task   = tasks.filter(t => t.id === taskId)[0]
+
+    this.taskDate = new Date(this.task.date).toLocaleString()
 
     if (!this.task) {
       // Avoid reference error in template

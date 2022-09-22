@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ViewWillEnter } from '@ionic/angular';
 import { Task } from 'src/app/interfaces/task';
@@ -27,6 +27,9 @@ export class MainPage implements ViewWillEnter {
     old: {uiValue: 'Oldest', value: 'old'}
   }
 
+  @Input()
+  currentSortOption: string = ''
+
   constructor(
     public userService: UserService,
     private router: Router,
@@ -37,7 +40,7 @@ export class MainPage implements ViewWillEnter {
   }
 
   async ionViewWillEnter() {
-    this.user  = await this.userService.getUser()
+    this.user = await this.userService.getUser()
 
     if (!this.user) {
       await this.userService.handleUserDoesNotExists()
@@ -46,7 +49,7 @@ export class MainPage implements ViewWillEnter {
 
     this.tasks = await this.userService.getTasks()
 
-    this.sortByNewest()
+    this.sortTasksByOption(new CustomEvent('', {detail: {value: this.currentSortOption}}))
   }
 
   viewTask(task: Task) {
@@ -95,6 +98,7 @@ export class MainPage implements ViewWillEnter {
       break
 
       default:
+        this.sortByNewest()
     }
   }
 
