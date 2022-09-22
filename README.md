@@ -30,3 +30,6 @@ Visualizar Tareas.<br>
 Editar Tareas. Borrar imágenes.
 
 Enlace de la APK.
+
+# Semana 2
+Añañido botón para ordenar tareas.
