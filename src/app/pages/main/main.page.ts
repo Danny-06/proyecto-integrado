@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { ViewWillEnter } from '@ionic/angular';
 import { Task } from 'src/app/interfaces/task';
 import { User } from 'src/app/interfaces/user';
-import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -21,14 +20,15 @@ export class MainPage implements ViewWillEnter {
 
   tasks: Task[] = []
 
-  sortingOptions = [
-    {uiValue: 'Newest', value: 'new'},
-    {uiValue: 'Oldest', value: 'old'}
-  ]
+  Object = window.Object
+
+  sortingOptions = {
+    new: {uiValue: 'Newest', value: 'new'},
+    old: {uiValue: 'Oldest', value: 'old'}
+  }
 
   constructor(
     public userService: UserService,
-    private authService: AuthService,
     private router: Router,
     private utils: UtilsService
   ) {
@@ -45,6 +45,8 @@ export class MainPage implements ViewWillEnter {
     }
 
     this.tasks = await this.userService.getTasks()
+
+    this.sortByNewest()
   }
 
   viewTask(task: Task) {
@@ -76,6 +78,32 @@ export class MainPage implements ViewWillEnter {
       ],
 
     })
+  }
+
+  sortTasksByOption(evt: Event) {
+    const event = evt as any as CustomEvent
+
+    const {value} = event.detail
+
+    switch (value) {
+      case this.sortingOptions.new.value:
+        this.sortByNewest()
+      break
+
+      case this.sortingOptions.old.value:
+        this.sortByOldest()
+      break
+
+      default:
+    }
+  }
+
+  sortByNewest() {
+    this.tasks.sort((task1, task2) => task1.date > task2.date ? -1 : 1)
+  }
+
+  sortByOldest() {
+    this.tasks.sort((task1, task2) => task1.date > task2.date ? 1 : -1)
   }
 
 }

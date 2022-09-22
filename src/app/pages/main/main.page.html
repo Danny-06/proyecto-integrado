@@ -24,8 +24,8 @@
         </div>
         <!-- Float button -->
         <div class="overlay-add-task-container">
-            <ion-select class="sort-tasks-select" [interfaceOptions]="{header: 'Sorting Method'}" placeholder="Sorting Method">
-                <ion-select-option *ngFor="let option of sortingOptions" [value]="option.value">{{option.uiValue}}</ion-select-option>
+            <ion-select class="sort-tasks-select" (ionChange)="sortTasksByOption($event)" [interfaceOptions]="{header: 'Sorting Method'}" placeholder="Sorting Method">
+                <ion-select-option *ngFor="let option of Object.values(sortingOptions)" [value]="option.value">{{option.uiValue}}</ion-select-option>
             </ion-select>
             <ion-fab-button class="add-task" (click)="addTask()">+</ion-fab-button>
         </div>
