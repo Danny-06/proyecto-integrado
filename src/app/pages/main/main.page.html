@@ -1,6 +1,6 @@
 <div id="app">
     <ion-header>
-        <ion-title>Main</ion-title>
+        <ion-title>My Tasks</ion-title>
         <ion-menu-button menu="main-menu">
             <ion-img class="user-pic" [src]="user && user.image ? user.image : userService.userPlaceholder"></ion-img>
         </ion-menu-button>
@@ -23,7 +23,10 @@
             </div>
         </div>
         <!-- Float button -->
-        <div class="overlay-add-task-container no-self-events">
+        <div class="overlay-add-task-container">
+            <ion-select class="sort-tasks-select" [interfaceOptions]="{header: 'Sorting Method'}" placeholder="Sorting Method">
+                <ion-select-option *ngFor="let option of sortingOptions" [value]="option.value">{{option.uiValue}}</ion-select-option>
+            </ion-select>
             <ion-fab-button class="add-task" (click)="addTask()">+</ion-fab-button>
         </div>
     </div>

@@ -15,7 +15,10 @@ export class RecoverPasswordPage implements OnInit {
   constructor(
     private authService: AuthService,
     private utils: UtilsService
-  ) {}
+  ) {
+    const win: any = window
+    win.pages[this.constructor.name] = this
+  }
 
   ngOnInit() {}
 

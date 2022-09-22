@@ -72,15 +72,15 @@ export class UserService {
   async handleUserDoesNotExists() {
     await this.userDoesNotExistAlert()
 
-    this.authService.removeUser()
+    // this.authService.removeUser()
     this.router.navigateByUrl('/register')
   }
 
   userDoesNotExistAlert() {
     return this.utils.alert({
       header: 'Error',
-      subHeader: 'User does not exist in the database.',
-      message: 'The account associated will be remove and you will be redirected to register page.',
+      subHeader: 'User does not exist in the database or connection failed.',
+      message: 'You will be redirected to register page.',
       buttons: ['Ok']
     })
   }

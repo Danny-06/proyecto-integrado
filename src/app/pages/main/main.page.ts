@@ -21,6 +21,11 @@ export class MainPage implements ViewWillEnter {
 
   tasks: Task[] = []
 
+  sortingOptions = [
+    {uiValue: 'Newest', value: 'new'},
+    {uiValue: 'Oldest', value: 'old'}
+  ]
+
   constructor(
     public userService: UserService,
     private authService: AuthService,
@@ -28,7 +33,7 @@ export class MainPage implements ViewWillEnter {
     private utils: UtilsService
   ) {
     const win: any = window
-    win[this.constructor.name] = this
+    win.pages[this.constructor.name] = this
   }
 
   async ionViewWillEnter() {

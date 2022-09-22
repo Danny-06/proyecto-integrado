@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ViewDidEnter, ViewWillEnter } from '@ionic/angular';
-import { Image } from 'src/app/interfaces/image';
+import { TaskImage } from 'src/app/interfaces/task-image';
 import { Task } from 'src/app/interfaces/task';
 import { User } from 'src/app/interfaces/user';
 import { FireStorageService } from 'src/app/services/fire-storage.service';
@@ -29,7 +29,7 @@ export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
     private utils: UtilsService
   ) {
     const win: any = window
-    win[this.constructor.name] = this
+    win.pages[this.constructor.name] = this
   }
 
   async ionViewWillEnter() {
@@ -87,6 +87,8 @@ export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
       return
     }
 
+    this.task.date = Date.now()
+
     await this.userService.addTask(this.task)
     this.router.navigateByUrl('/main')
   }
@@ -94,7 +96,7 @@ export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
   async addImage() {
     const imageFile = await this.utils.requestFile('image/*') as File
 
-    const image = {src: this.userService.loadingImage, objectFit: 'cover'} as Image
+    const image = {src: this.userService.loadingImage, objectFit: 'cover'} as TaskImage
     this.task.images.push(image)
 
     const imageURL = await this.fireStorageService.uploadFile(imageFile, 'tasks', `${imageFile.name} - ${Date.now()}`)
@@ -102,7 +104,7 @@ export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
     image.src = imageURL
   }
 
-  removeImage(image: Image) {
+  removeImage(image: TaskImage) {
     this.task.images = this.task.images.filter(img => img.src !== image.src)
   }
 

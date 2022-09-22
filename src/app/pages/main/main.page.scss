@@ -2,6 +2,8 @@
   position: relative;
   width: 100%;
   height: 100%;
+
+  --toolbar-height: 5rem;
 }
 
 #app-content {
@@ -11,7 +13,7 @@
 
 .content {
   width: 100%;
-  height: 100%;
+  height: calc(100% - var(--toolbar-height));
   padding: 1rem;
   padding-bottom: 7rem;
 
@@ -21,11 +23,16 @@
 .overlay-add-task-container {
   position: absolute;
   inset: 0;
+  top: auto;
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  height: var(--toolbar-height);
   padding: 1rem;
 
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+  background-image: linear-gradient(0deg, #183f5e, #2486b1);
 }
 
 .tasks {
@@ -151,4 +158,22 @@
 
 .delete {
   color: #f00;
+}
+
+.sort-tasks-select {
+
+}
+
+ion-select {
+  background-color: #1076be;
+  box-shadow: #0005 0 0 14px 0;
+  border-radius: 0.3em;
+
+  column-gap: 0.4em;
+  padding-right: 8px;
+}
+
+ion-select::part(placeholder) {
+  opacity: 1;
+  color: #ccc;
 }

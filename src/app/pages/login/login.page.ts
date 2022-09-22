@@ -28,7 +28,7 @@ export class LoginPage implements OnInit {
     private utils: UtilsService
   ) {
     const win: any = window
-    win[this.constructor.name] = this
+    win.pages[this.constructor.name] = this
   }
 
   ngOnInit() {

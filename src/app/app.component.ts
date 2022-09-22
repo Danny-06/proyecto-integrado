@@ -6,10 +6,14 @@ import { AuthService } from './services/auth.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
+
 export class AppComponent {
 
   constructor(
     public authService: AuthService
-  ) {}
+  ) {
+    const win: any = window
+    win.pages = {}
+  }
 
 }

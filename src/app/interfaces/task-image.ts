@@ -1,4 +1,4 @@
-export interface Image {
+export interface TaskImage {
   src: string
   objectFit: string
 }

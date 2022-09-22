@@ -2,4 +2,40 @@
   position: relative;
   width: 100%;
   height: 100%;
+
+  font-size: 1.2rem;
+}
+
+#app-content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+  align-items: center;
+
+  padding-top: 2rem;
+}
+
+.profileimg {
+  width: 10rem;
+  aspect-ratio: 1 / 1;
+
+  outline: solid 3px #5eabb9;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profileimg > ion-img {
+  width: 100%;
+  height: 100%;
+}
+
+.user-item-info {
+  background-image: linear-gradient(-45deg, #4f306c, #3692a5);
+  padding: 0.5em 1em;
+  border-radius: 0.2em 1em;
+}
+
+
+.username {
+
 }
