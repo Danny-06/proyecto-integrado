@@ -1,8 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AlertOptions } from '@ionic/angular';
+import { resolve } from 'dns';
 import { Observable, Observer } from 'rxjs';
-import { PublicPromise } from '../interfaces/public-promise';
+
+
+interface PublicPromise<T> extends Promise<T> {
+  resolve(value?: T): void
+  reject(reason?: any): void
+  mixResult(): Promise<any[]>
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -64,14 +72,109 @@ export class UtilsService {
     })
   }
 
-  async alert(options: AlertOptions) {
+  async alert(options: AlertOptions, timeout: null | number = null) {
     const ionAlert = document.createElement('ion-alert')
     Object.assign(ionAlert, options)
     document.body.append(ionAlert)
 
     ionAlert.present()
 
+    if (typeof timeout === 'number' && !isNaN(timeout) && isFinite(timeout)) {
+      setTimeout(() => ionAlert.dismiss(), timeout)
+    }
+
     await ionAlert.onDidDismiss()
+  }
+
+  private isDateTimePickerShown = false
+
+  async showDateTimePicker(): Promise<[Date?, Error?]> {
+    if (this.isDateTimePickerShown) throw new Error(`Cannot show a datetime picker while there's still one active`)
+
+    this.isDateTimePickerShown = true
+
+    const overlay = document.createElement('div')
+    const shadow = overlay.attachShadow({mode: 'open'})
+    overlay.dataset.component = 'ion-datetime-picker'
+
+    const style = shadow.appendChild(document.createElement('style'))
+    style.innerHTML = // css
+    `
+    :host {
+      all: revert;
+
+      /* Custom Property dependency of the 'datetime' */
+      --ion-color-base: var(--ion-color-primary, #3880ff) !important;
+    }
+
+    :host {
+      position: fixed;
+      inset: 0;
+
+      display: flex;
+
+      background-color: #0008;
+    }
+
+    ion-datetime {
+      margin: auto;
+      animation: grow 0.3s ease-out;
+    }
+
+    @keyframes grow {
+      0% {
+        transform: scale(0);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+    `
+
+    const dateTimePicker = document.createElement('ion-datetime')
+    dateTimePicker.showDefaultButtons = true
+    dateTimePicker.showClearButton = true
+
+    // The component to be able to initialize must be appended to the DOM
+    document.head.append(dateTimePicker)
+    shadow.append(dateTimePicker)
+    
+    await this.delay(150)
+
+    const confirmButton = dateTimePicker.shadowRoot.querySelector('#confirm-button')
+    const clearButton   = dateTimePicker.shadowRoot.querySelector('#clear-button')
+    const cancelButton  = dateTimePicker.shadowRoot.querySelector('#cancel-button')
+
+    document.querySelector('ion-app').append(overlay)
+
+    const result = [null, null]
+
+    return new Promise((resolve, reject) => {
+      confirmButton.addEventListener('click', async event => {
+        await this.delay()
+
+        const date = new Date(dateTimePicker.value)
+        result[0] = date
+
+        resolve(result)
+      }, {once: true})
+
+      clearButton.addEventListener('click', event => {
+        resolve(result)
+      }, {once: true})
+
+      cancelButton.addEventListener('click', event => {
+        const error = new Error('DateTimePicker cancelled')
+        result[1] = error
+
+        resolve(result)
+      }, {once: true})
+    })
+    .finally(() => {
+      this.isDateTimePickerShown = false
+      overlay.remove()
+    }) as Promise<[Date?, Error?]>
   }
 
   createPublicPromise(): PublicPromise<any> {
@@ -96,6 +199,18 @@ export class UtilsService {
       finally(onFinally?) {
         return promise.finally(onFinally)
       },
+
+      mixResult() {
+        const mixedPromise = this.createPublicPromise()
+
+        this.then(
+          value => mixedPromise.resolve([value, null]),
+          reason => mixedPromise.resolve([null, reason])
+        )
+
+        return mixedPromise
+      },
+
       [Symbol.toStringTag]: 'PublicPromise'
     }
 

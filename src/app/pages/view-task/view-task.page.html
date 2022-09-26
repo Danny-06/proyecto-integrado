@@ -7,16 +7,37 @@
         </ion-menu-button>
     </ion-header>
     <div id="app-content">
-        <div class="date-creation">{{ taskDate }}</div>
-        <h1 class="task-title">{{ task.title }}</h1>
-        <div class="task-description-wrapper">
-            <div class="task-description">{{ task.description }}</div>
+        <div class="content">
+            <div class="date-creation">{{ taskDate }}</div>
+            <h1 class="task-title">{{ task.title }}</h1>
+            <div class="task-description-wrapper">
+                <div class="task-description">{{ task.description }}</div>
+            </div>
+
+            
+            <label style="align-self: flex-start;">Date Limit</label>
+            <ion-item class="task-date-limit">
+                <ion-input readonly type="text" [(ngModel)]="dateLimit"></ion-input>
+                <ion-icon name="calendar-outline"></ion-icon>
+            </ion-item>
+    
+            <h1 class="images-title" *ngIf="task.images?.length">Images</h1>
+    
+            <div class="images">
+                <ion-img class="image" *ngFor="let image of task.images" [src]="image.src" [ngStyle]="{objectFit: image.objectFit}"></ion-img>
+            </div>
         </div>
+        <div class="overlay-add-task-container">
+            <ion-fab-button class="mark-task-as-completed {{!task.completed ? 'green': 'red'}}" (click)="toogleTaskState()">
+                <div *ngIf="!task.completed; then checked_btn else unchecked_btn"></div>
 
-        <h1 class="images-title" *ngIf="task.images?.length">Images</h1>
-
-        <div class="images">
-            <ion-img class="image" *ngFor="let image of task.images" [src]="image.src" [ngStyle]="{objectFit: image.objectFit}"></ion-img>
+                <ng-template #checked_btn>
+                    <ion-icon name="checkmark-outline"></ion-icon>
+                </ng-template>
+                <ng-template #unchecked_btn>
+                    <ion-icon name="close-outline"></ion-icon>
+                </ng-template>
+            </ion-fab-button>
         </div>
     </div>
 </div>

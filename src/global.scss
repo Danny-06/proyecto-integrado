@@ -368,8 +368,13 @@ ion-textarea {
   transition: background-color 0.3s;
 }
 
-:root ion-input:focus-within,
-:root ion-textarea:focus-within {
+:root ion-item {
+  justify-content: space-between;
+  --background: #0c4772;
+}
+
+:root ion-input:not([readonly]):focus-within,
+:root ion-textarea:not([readonly]):focus-within {
   background-color: #061e31;
 }
 
@@ -393,8 +398,8 @@ ion-textarea {
   transition: width 0.3s;
 }
 
-:root ion-input:focus-within::after,
-:root ion-textarea:focus-within::after {
+:root ion-input:not([readonly]):focus-within:after,
+:root ion-textarea:not([readonly]):focus-within::after {
   width: 100%;
   left: 0;
   right: auto;

@@ -8,8 +8,14 @@
     </ion-header>
     <div id="app-content">
         <ion-input class="task-title" type="text" placeholder="Title" [(ngModel)]="task.title"></ion-input>
-        <ion-textarea class="task-description" placeholder="Description (optional)" [(ngModel)]="task.description">
-        </ion-textarea>
+        <ion-textarea class="task-description" placeholder="Description (optional)" [(ngModel)]="task.description"></ion-textarea>
+
+        <label style="align-self: flex-start;">Date Limit</label>
+
+        <ion-item class="task-date-limit">
+            <ion-input readonly type="text" [(ngModel)]="dateLimit" (click)="showDateLimitPicker()"></ion-input>
+            <ion-icon name="calendar-outline"></ion-icon>
+        </ion-item>
 
         <ion-button class="add-task" (click)="updateTask()">Update Task</ion-button>
 

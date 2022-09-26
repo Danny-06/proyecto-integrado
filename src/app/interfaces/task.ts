@@ -4,6 +4,8 @@ export interface Task {
   id: string
   title: string
   description: string
-  images: TaskImage[],
+  images: TaskImage[]
+  completed: boolean
   date: number
+  dateLimit: number
 }

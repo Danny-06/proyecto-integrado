@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewDidEnter, ViewWillEnter } from '@ionic/angular';
 import { TaskImage } from 'src/app/interfaces/task-image';
@@ -19,7 +19,10 @@ export class EditTaskPage implements ViewWillEnter, ViewDidEnter {
 
   user: User
 
-  task: Task = {title: '', description: '', images: []} as Task
+  task: Task = {title: '', description: '', images: [], completed: false, date: null, dateLimit: null} as Task
+
+  @Input()
+  dateLimit: string = null
 
   constructor(
     private utils: UtilsService,
@@ -41,10 +44,13 @@ export class EditTaskPage implements ViewWillEnter, ViewDidEnter {
 
     const tasks = await this.userService.getTasks()
     this.task   = tasks.filter(t => t.id === taskId)[0]
+    // this.dateLimit = this.task.dateLimit ? new Date(this.task.dateLimit).toLocaleString() : ''
+
+    this.setDateLimit(new Date(this.task.dateLimit))
 
     if (!this.task) {
       // Avoid reference error in template
-      this.task = {title: '', description: '', images: []} as Task
+      this.task = {title: '', description: '', images: [], completed: false, date: null, dateLimit: null} as Task
 
       this.handleTaskDoesNotExist()
       return
@@ -123,6 +129,21 @@ export class EditTaskPage implements ViewWillEnter, ViewDidEnter {
     const imageURL = await this.fireStorageService.uploadFile(imageFile, 'tasks', `${imageFile.name} - ${Date.now()}`)
 
     image.src = imageURL
+  }
+
+  async showDateLimitPicker() {
+    const [date, error] = await this.utils.showDateTimePicker()
+
+    if (error) {
+      return
+    }
+
+    this.setDateLimit(date)
+    this.task.dateLimit = date?.getTime() ?? null
+  }
+
+  setDateLimit(date: Date) {
+    this.dateLimit = date?.toLocaleString() ?? 'No date limit specified'
   }
 
   emptyTitleAlert() {

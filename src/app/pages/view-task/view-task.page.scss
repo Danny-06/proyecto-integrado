@@ -4,30 +4,53 @@
   height: 100%;
 }
 
+:host {
+  --toolbar-height: 5rem;
+}
+
 #app-content {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 1rem;
+
+  padding: 0;
+
+  overflow: hidden;
 }
 
-#app-content > * {
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  row-gap: 1.4rem;
+
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  padding: 1rem;
+
+  overflow: auto;
+}
+
+.content > * {
   flex-shrink: 0;
 }
 
 .date-creation {
+  align-self: flex-start;
+
   padding: 0.4em 0.8em;
 
   background-image: linear-gradient(45deg, #045679, #20908d);
   border-radius: 0.4em;
 
   font-weight: bold;
+  font-family: monospace;
+  font-size: 0.75rem;
 }
 
 .task-title {
   margin: 0;
-  margin-bottom: 1rem;
   padding: 0.3em;
 
   border-bottom: solid 5px #00b8b3;
@@ -52,6 +75,21 @@
   height: 100%;
 
   overflow: auto;
+}
+
+.task-date-limit {
+  width: 100%;
+  font-family: monospace;
+}
+
+.task-date-limit:focus-within {
+  --highlight-background: transparent;
+  --full-highlight-height: 0;
+  --border-style: hidden;
+}
+
+.task-date-limit > ion-input {
+  flex-grow: 1;
 }
 
 
@@ -84,4 +122,31 @@
 
   cursor: pointer;
   overflow: hidden;
+}
+
+
+
+
+.overlay-add-task-container {  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  height: var(--toolbar-height);
+  padding: 1rem;
+
+  background-image: linear-gradient(0deg, #183f5e, #2486b1);
+}
+
+.mark-task-as-completed.green {
+  --background: #1da346;
+}
+
+.mark-task-as-completed.red {
+  --background: #b42424;
+}
+
+.mark-task-as-completed > ion-icon {
+  font-size: 2rem;
+  color: #fff;
 }

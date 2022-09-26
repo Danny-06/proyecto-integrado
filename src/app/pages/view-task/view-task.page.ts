@@ -19,6 +19,8 @@ export class ViewTaskPage implements ViewWillEnter {
 
   taskDate: string
 
+  dateLimit: string
+
   constructor(
     private utils: UtilsService,
     private router: Router,
@@ -42,6 +44,7 @@ export class ViewTaskPage implements ViewWillEnter {
     this.task   = tasks.filter(t => t.id === taskId)[0]
 
     this.taskDate = new Date(this.task.date).toLocaleString()
+    this.dateLimit = this.task.dateLimit != null ? new Date(this.task.dateLimit).toLocaleString() : 'No date limit specified'
 
     if (!this.task) {
       // Avoid reference error in template
@@ -60,6 +63,22 @@ export class ViewTaskPage implements ViewWillEnter {
     })
 
     this.router.navigateByUrl('/main')
+  }
+
+  async toogleTaskState() {
+    this.task.completed = !this.task.completed
+
+    await this.userService.updateTask(this.task)
+
+    let completeState = 'uncompleted'
+
+    if (this.task.completed) {
+      completeState = 'completed'
+    }
+
+    this.utils.alert({
+      message: `You marked this task as ${completeState}.`
+    }, 2500)
   }
 
 }

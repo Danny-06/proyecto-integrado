@@ -23,7 +23,7 @@ ion-input.error {
 
 
 .add-task {
-  margin-bottom: 8rem;
+  margin-bottom: 7rem;
 }
 
 .add-task::part(native) {
@@ -102,4 +102,19 @@ ion-input.error {
 
   cursor: pointer;
   overflow: hidden;
+}
+
+.task-date-limit {
+  width: 100%;
+  font-family: monospace;
+}
+
+// .task-date-limit:focus-within {
+//   --highlight-background: transparent;
+//   --full-highlight-height: 0;
+//   --border-style: hidden;
+// }
+
+.task-date-limit > ion-input {
+  flex-grow: 1;
 }

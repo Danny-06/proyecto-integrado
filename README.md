@@ -33,3 +33,4 @@ Enlace de la APK.
 
 # Semana 2
 Añañido botón para ordenar tareas.
+Más filtros añadidos y mejora en la visualización de estados de una tarea.

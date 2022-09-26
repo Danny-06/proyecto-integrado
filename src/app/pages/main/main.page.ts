@@ -16,20 +16,6 @@ import { UtilsService } from 'src/app/services/utils.service';
 
 export class MainPage implements ViewWillEnter {
 
-  user: User
-
-  tasks: Task[] = []
-
-  Object = window.Object
-
-  sortingOptions = {
-    new: {uiValue: 'Newest', value: 'new'},
-    old: {uiValue: 'Oldest', value: 'old'}
-  }
-
-  @Input()
-  currentSortOption: string = ''
-
   constructor(
     public userService: UserService,
     private router: Router,
@@ -38,6 +24,16 @@ export class MainPage implements ViewWillEnter {
     const win: any = window
     win.pages[this.constructor.name] = this
   }
+
+  user: User
+
+  tasks: Task[] = []
+
+  tasksState: Task[] = this.tasks
+
+  dateLimit: string
+
+  Object = window.Object
 
   async ionViewWillEnter() {
     this.user = await this.userService.getUser()
@@ -48,8 +44,9 @@ export class MainPage implements ViewWillEnter {
     }
 
     this.tasks = await this.userService.getTasks()
+    this.tasksState = [...this.tasks]
 
-    this.sortTasksByOption(new CustomEvent('', {detail: {value: this.currentSortOption}}))
+    this.sortTasksByOption(this.currentSortOption)
   }
 
   viewTask(task: Task) {
@@ -64,8 +61,8 @@ export class MainPage implements ViewWillEnter {
     this.router.navigateByUrl('/add-task')
   }
 
-  deleteTask(task: Task) {
-    return this.utils.alert({
+  async deleteTask(task: Task) {
+    await this.utils.alert({
       header: 'Task Delete',
       message: 'Are you sure you want to delete this task?',
       buttons: [
@@ -75,6 +72,9 @@ export class MainPage implements ViewWillEnter {
           handler: async () => {
             await this.userService.deleteTask(task)
             this.tasks = await this.userService.getTasks()
+
+            this.filterTasksByOption(this.currentFilterOption)
+            this.sortTasksByOption(this.currentSortOption)
           }
         },
         {text: 'Cancel', role: 'Cancel'}
@@ -83,11 +83,24 @@ export class MainPage implements ViewWillEnter {
     })
   }
 
-  sortTasksByOption(evt: Event) {
-    const event = evt as any as CustomEvent
+  sortingOptions = {
+    new:               {uiValue: 'Newest', value: 'new'},
+    old:               {uiValue: 'Oldest', value: 'old'},
+    nearestdatelimit:  {uiValue: 'Nearest Date Limit', value: 'nearestdatelimit'},
+    farthestdatelimit: {uiValue: 'Farthest Date Limit', value: 'farthestdatelimit'}
+  }
 
+  @Input()
+  currentSortOption: string = this.sortingOptions.new.value
+
+  handleSortOnChange(evt: Event) {
+    const event = evt as any as CustomEvent
     const {value} = event.detail
 
+    this.sortTasksByOption(value)
+  }
+
+  sortTasksByOption(value: string) {
     switch (value) {
       case this.sortingOptions.new.value:
         this.sortByNewest()
@@ -97,17 +110,157 @@ export class MainPage implements ViewWillEnter {
         this.sortByOldest()
       break
 
+      case this.sortingOptions.nearestdatelimit.value:
+        this.sortByNearestDateLimit()
+      break
+
+      case this.sortingOptions.farthestdatelimit.value:
+        this.sortByFarthestDateLimit()
+      break
+
       default:
         this.sortByNewest()
     }
   }
 
   sortByNewest() {
-    this.tasks.sort((task1, task2) => task1.date > task2.date ? -1 : 1)
+    this.tasksState.sort((task1, task2) => task1.date > task2.date ? -1 : 1)
   }
 
   sortByOldest() {
-    this.tasks.sort((task1, task2) => task1.date > task2.date ? 1 : -1)
+    this.tasksState.sort((task1, task2) => task1.date > task2.date ? 1 : -1)
+  }
+
+  sortByDateLimit() {
+    this.tasksState.sort((task1, task2) => task1.dateLimit == null ? -1 : 1)
+  }
+
+  sortByNearestDateLimit() {
+    this.sortByDateLimit()
+
+    this.tasksState.sort((task1, task2) => {
+      if (task1.dateLimit == null || task2.dateLimit == null) return -1
+
+      return task1.dateLimit > task2.dateLimit ? 1 : -1
+    })
+  }
+
+  sortByFarthestDateLimit() {
+    this.sortByDateLimit()
+
+    this.tasksState.sort((task1, task2) => {
+      if (task1.dateLimit == null || task2.dateLimit == null) return -1
+
+      return task1.dateLimit < task2.dateLimit ? 1 : -1
+    })
+  }
+
+  filterOptions = {
+    nofilter:         {uiValue: 'No Filter',           value: 'nofilter'},
+    complete:         {uiValue: 'Completed Tasks',     value: 'complete'},
+    uncomplete:       {uiValue: 'Uncompleted Tasks',   value: 'uncomplete'},
+    datelimit:        {uiValue: 'Date Limit Tasks',    value: 'datelimit'},
+    nodatelimit:      {uiValue: 'No Date Limit Tasks', value: 'nodatelimit'},
+    datelimitover:    {uiValue: 'Date Limit Over',     value: 'datelimitover'},
+    datelimitnotover: {uiValue: 'Date Limit Not Over', value: 'datelimitnotover'}
+  }
+
+  @Input()
+  currentFilterOption: string = this.filterOptions.nofilter.value
+
+  handleFilterOnChange(evt: Event) {
+    const event = evt as any as CustomEvent
+    const {value} = event.detail
+
+    this.filterTasksByOption(value)
+    this.sortTasksByOption(this.currentSortOption)
+  }
+
+  filterTasksByOption(value: string) {
+    switch (value) {
+      case this.filterOptions.nofilter.value:
+        this.revertFilter()
+      break
+
+      case this.filterOptions.complete.value:
+        this.filterByComplete()
+      break
+
+      case this.filterOptions.uncomplete.value:
+        this.filterByUnComplete()
+      break
+
+      case this.filterOptions.datelimit.value:
+        this.filterByDateLimit()
+      break
+
+      case this.filterOptions.nodatelimit.value:
+        this.filterByNoDateLimit()
+      break
+
+      case this.filterOptions.datelimitover.value:
+        this.filterByDateLimitOver()
+      break
+
+      case this.filterOptions.datelimitnotover.value:
+        this.filterByDateLimitNotOver()
+      break
+
+      default:
+        this.revertFilter()
+    }
+  }
+
+  filterByComplete() {
+    this.tasksState = this.tasks.filter(task => task.completed)
+  }
+
+  filterByUnComplete() {
+    this.tasksState = this.tasks.filter(task => !task.completed)
+  }
+
+  filterByDateLimit() {
+    this.tasksState = this.tasks.filter(task => task.dateLimit != null)
+  }
+
+  filterByNoDateLimit() {
+    this.tasksState = this.tasks.filter(task => task.dateLimit == null)
+  }
+
+  filterByDateLimitOver() {
+    this.tasksState = this.tasks.filter(task => {
+      if (task.dateLimit == null) return false
+      return Date.now() > task.dateLimit
+    })
+  }
+
+  filterByDateLimitNotOver() {
+    this.tasksState = this.tasks.filter(task => {
+      if (task.dateLimit == null) return false
+      return Date.now() < task.dateLimit
+    })
+  }
+
+  revertFilter() {
+    this.tasksState = [...this.tasks]
+  }
+
+
+  getFormatedDate(date: number) {
+    return date != null ? new Date(date).toLocaleDateString() : ''
+  }
+
+
+  // CSS Classes
+
+  isCompletedClass(task: Task) {
+    return task.completed ? 'completed' : ''
+  }
+
+  isDateLimitOverClass(task: Task) {
+    if (task.dateLimit == null) return ''
+
+    return Date.now() > task.dateLimit ? 'date-limit-over' : ''
   }
 
 }

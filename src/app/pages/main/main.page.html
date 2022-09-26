@@ -8,10 +8,18 @@
     <div id="app-content">
         <div class="content">
             <div class="tasks">
-                <div class="no-tasks" *ngIf="tasks.length === 0">There's no tasks yet</div>
-                <div class="task" *ngFor="let task of tasks" (click)="viewTask(task)">
+                <div class="no-tasks" *ngIf="tasksState.length === 0">There's no tasks yet</div>
+                <div class="task {{isCompletedClass(task) + ' ' + isDateLimitOverClass(task)}}" *ngFor="let task of tasksState" (click)="viewTask(task)">
                     <div class="wrapper1">
-                        <div class="task-title">{{ task.title }}</div>
+                        <div class="task-header">
+                            <div class="task-title">{{ task.title }}</div>
+                            <div class="task-description">{{ task.description.slice(0, 50) }}</div>
+                        </div>
+
+                        <div class="task-dates">
+                            <div class="task-date">{{ getFormatedDate(task.date) }}</div>
+                            <div class="task-date-limit" *ngIf="task.dateLimit != null">{{ getFormatedDate(task.dateLimit) }}</div>
+                        </div>
                     </div>
                     <div class="wrapper2 no-self-events">
                         <div class="task-buttons" (click)="$event.stopPropagation()">
@@ -22,11 +30,15 @@
                 </div>
             </div>
         </div>
-        <!-- Float button -->
         <div class="overlay-add-task-container">
-            <ion-select class="sort-tasks-select" [(ngModel)]="currentSortOption" (ionChange)="sortTasksByOption($event)" [interfaceOptions]="{header: 'Sorting Method'}" placeholder="Sorting Method">
-                <ion-select-option *ngFor="let option of Object.values(sortingOptions)" [value]="option.value">{{option.uiValue}}</ion-select-option>
-            </ion-select>
+            <div class="group-select">
+                <ion-select class="sort-tasks-select" [(ngModel)]="currentSortOption" (ionChange)="handleSortOnChange($event)" [interfaceOptions]="{header: 'Sorting Method'}" placeholder="Sorting Method">
+                    <ion-select-option *ngFor="let option of Object.values(sortingOptions)" [value]="option.value">{{option.uiValue}}</ion-select-option>
+                </ion-select>
+                <ion-select class="filter-tasks" [(ngModel)]="currentFilterOption" (ionChange)="handleFilterOnChange($event)" [interfaceOptions]="{header: 'Filter'}" placeholder="Filter">
+                    <ion-select-option *ngFor="let option of Object.values(filterOptions)" [value]="option.value">{{option.uiValue}}</ion-select-option>
+                </ion-select>
+            </div>
             <ion-fab-button class="add-task" (click)="addTask()">+</ion-fab-button>
         </div>
     </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ViewDidEnter, ViewWillEnter } from '@ionic/angular';
 import { TaskImage } from 'src/app/interfaces/task-image';
@@ -20,16 +20,23 @@ export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
 
   user: User
 
-  task: Task = {title: '', description: '', images: []} as Task
+  task: Task = {title: '', description: '', images: [], completed: false, date: null, dateLimit: null} as Task
+
+  dateLimit: string = 'No date limit specified'
+
+  rootNode
 
   constructor(
     public userService: UserService,
     private fireStorageService: FireStorageService,
     private router: Router,
-    private utils: UtilsService
+    private utils: UtilsService,
+    private elementReference: ElementRef
   ) {
     const win: any = window
     win.pages[this.constructor.name] = this
+
+    this.rootNode = this.elementReference.nativeElement as HTMLElement
   }
 
   async ionViewWillEnter() {
@@ -44,8 +51,8 @@ export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
     this.componentLoaded = true
 
     // Show optional images when clicking the 'Show Optional' button
-    const btnOptional = document.querySelector('.btn-optional') as HTMLElement
-    const optional = document.querySelector('.optional') as HTMLDivElement
+    const btnOptional = this.rootNode.querySelector('.btn-optional') as HTMLElement
+    const optional = this.rootNode.querySelector('.optional') as HTMLDivElement
 
     btnOptional.addEventListener('click', event => {
       if (optional.hidden) optional.hidden = false
@@ -53,7 +60,7 @@ export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
     })
 
     // Remove red highligh in input task-name on focus
-    const inputTitle = document.querySelector('.task-title') as HTMLIonInputElement
+    const inputTitle = this.rootNode.querySelector('.task-title') as HTMLIonInputElement
     inputTitle.firstChild.addEventListener('focus', event => inputTitle.classList.remove('error'))
 
     // Toggle between 'cover' and 'contain' values of 'object-fit' in 'task-images' on click
@@ -81,13 +88,20 @@ export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
     if (this.task.title === '') {
       await this.emptyTitleAlert()
 
-      const inputTitle = document.querySelector('.task-title') as HTMLIonButtonElement
+      const inputTitle = this.rootNode.querySelector('.task-title') as HTMLIonButtonElement
       inputTitle.classList.add('error')
 
       return
     }
 
     this.task.date = Date.now()
+    this.task.dateLimit = (() => {
+      const date = new Date(this.dateLimit).getTime()
+
+      if (isNaN(date)) return null
+
+      return date
+    })()
 
     await this.userService.addTask(this.task)
     this.router.navigateByUrl('/main')
@@ -102,6 +116,21 @@ export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
     const imageURL = await this.fireStorageService.uploadFile(imageFile, 'tasks', `${imageFile.name} - ${Date.now()}`)
 
     image.src = imageURL
+  }
+
+  async showDateLimitPicker() {
+    const [date, error] = await this.utils.showDateTimePicker()
+
+    if (error) {
+      return
+    }
+
+    this.setDateLimit(date)
+    this.task.dateLimit = date?.getTime() ?? null
+  }
+
+  setDateLimit(date: Date) {
+    this.dateLimit = date?.toLocaleString() ?? 'No date limit specified'
   }
 
   removeImage(image: TaskImage) {
