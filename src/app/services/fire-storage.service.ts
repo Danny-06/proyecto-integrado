@@ -19,13 +19,15 @@ export class FireStorageService {
     const storageRef = this.storage.ref(filePath)
     const task = storageRef.put(file)
 
-    return new Promise((resolve, reject) => {
+    return task.then(() => storageRef.getDownloadURL().toPromise())
 
-      task.snapshotChanges().subscribe({
-        complete: () => storageRef.getDownloadURL().subscribe({next: resolve, error: reject})
-      })
+    // return new Promise((resolve, reject) => {
 
-    })
+    //   task.snapshotChanges().subscribe({
+    //     complete: () => storageRef.getDownloadURL().subscribe({next: resolve, error: reject})
+    //   })
+
+    // })
   }
 
 }

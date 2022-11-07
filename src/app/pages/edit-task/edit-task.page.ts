@@ -44,9 +44,7 @@ export class EditTaskPage implements ViewWillEnter, ViewDidEnter {
 
     const tasks = await this.userService.getTasks()
     this.task   = tasks.filter(t => t.id === taskId)[0]
-    // this.dateLimit = this.task.dateLimit ? new Date(this.task.dateLimit).toLocaleString() : ''
-
-    this.setDateLimit(new Date(this.task.dateLimit))
+    this.dateLimit = this.task.dateLimit != null ? new Date(this.task.dateLimit).toLocaleString() : 'No date limit specified'
 
     if (!this.task) {
       // Avoid reference error in template
