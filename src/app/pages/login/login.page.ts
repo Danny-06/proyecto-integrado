@@ -42,7 +42,7 @@ export class LoginPage implements OnInit {
 
     if (error) {
       const message = error.message.replace('Firebase:', '').replace(`(${error.code})`, '')
-      this.accountError(`${message}<br>${error.code}`)
+      this.loginError(`${message}<br>${error.code}`)
       return
     }
 
@@ -53,10 +53,10 @@ export class LoginPage implements OnInit {
 
   // Alerts
 
-  async accountError(message: string) {
+  async loginError(message: string) {
     await this.utils.alert({
       header: 'Error',
-      subHeader: `We couldn't create your account`,
+      subHeader: `We couldn't log you`,
       message,
       buttons: ['Ok']
     })
