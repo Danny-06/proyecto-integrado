@@ -24,6 +24,7 @@ puede agregar a otros usuarios y ver sus tareas.
 ## Registro
 
 # Bibliografía
+https://www.bezkoder.com/firebase-storage-angular-10-file-upload/
 https://capacitorjs.com/docs/guides/push-notifications-firebase
 https://enappd.com/blog/how-to-implement-firebase-push-notifications-in-ionic-apps/157/
 
