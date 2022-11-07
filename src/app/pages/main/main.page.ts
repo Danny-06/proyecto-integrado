@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ViewWillEnter } from '@ionic/angular';
 import { Task } from 'src/app/interfaces/task';
 import { User } from 'src/app/interfaces/user';
+import { FireNotificationsService } from 'src/app/services/fire-notifications.service';
 import { UserService } from 'src/app/services/user.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -19,10 +20,12 @@ export class MainPage implements ViewWillEnter {
   constructor(
     public userService: UserService,
     private router: Router,
-    private utils: UtilsService
+    private utils: UtilsService,
+    private fireNotificationsService: FireNotificationsService
   ) {
     const win: any = window
     win.pages[this.constructor.name] = this
+    win.pages.notifications = this.fireNotificationsService
   }
 
   user: User
@@ -74,7 +77,6 @@ export class MainPage implements ViewWillEnter {
             this.tasks = await this.userService.getTasks()
 
             this.filterTasksByOption(this.currentFilterOption)
-            this.sortTasksByOption(this.currentSortOption)
           }
         },
         {text: 'Cancel', role: 'Cancel'}
@@ -173,7 +175,6 @@ export class MainPage implements ViewWillEnter {
     const {value} = event.detail
 
     this.filterTasksByOption(value)
-    this.sortTasksByOption(this.currentSortOption)
   }
 
   filterTasksByOption(value: string) {
@@ -209,6 +210,8 @@ export class MainPage implements ViewWillEnter {
       default:
         this.revertFilter()
     }
+
+    this.sortTasksByOption(this.currentSortOption)
   }
 
   filterByComplete() {
@@ -229,7 +232,7 @@ export class MainPage implements ViewWillEnter {
 
   filterByDateLimitOver() {
     this.tasksState = this.tasks.filter(task => {
-      if (task.dateLimit == null) return false
+      if (task.completed || task.dateLimit == null) return false
       return Date.now() > task.dateLimit
     })
   }

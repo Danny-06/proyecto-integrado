@@ -48,6 +48,10 @@ const routes: Routes = [
   {
     path: 'view-task/:id',
     loadChildren: () => import('./pages/view-task/view-task.module').then(m => m.ViewTaskPageModule)
+  },
+  {
+    path: 'user-details-edit',
+    loadChildren: () => import('./pages/user-details-edit/user-details-edit.module').then( m => m.UserDetailsEditPageModule)
   }
 ];
 

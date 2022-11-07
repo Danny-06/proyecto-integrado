@@ -373,8 +373,8 @@ ion-textarea {
   --background: #0c4772;
 }
 
-:root ion-input:not([readonly]):focus-within,
-:root ion-textarea:not([readonly]):focus-within {
+:root :not(ion-item) > ion-input:not([readonly]):focus-within,
+:root :not(ion-item) > ion-textarea:not([readonly]):focus-within {
   background-color: #061e31;
 }
 

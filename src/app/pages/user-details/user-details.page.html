@@ -7,10 +7,21 @@
         </ion-menu-button>
     </ion-header>
     <div id="app-content">
-
-        <div class="profileimg" (click)="changeProfilePicture()">
+        <div class="profileimg">
             <ion-img [src]="user.image"></ion-img>
         </div>
         <div class="user-item-info username">{{user.name}}</div>
+
+        <div class="user-email">{{authService.currentUser?.email}}</div>
+
+        <hr>
+
+        <div class="user-item-info task-length">Tasks: {{tasks?.length ?? '??'}}</div>
+        <div class="user-item-info task-completed-length">Tasks Completed: {{taskCompletedLength ?? '??'}}</div>
+        <div class="user-item-info task-date-limit-length">Tasks Date Limit: {{taskDateLimitLength ?? '??'}}</div>
+        <div class="user-item-info task-date-limit-over-length">Tasks Date Limit Over: {{taskDateLimitOverLength ?? '??'}}</div>
+        <ion-button class="edit-profile" (click)="goToEditPage()">
+            <ion-icon name="pencil-outline"></ion-icon>
+        </ion-button>
     </div>
 </div>

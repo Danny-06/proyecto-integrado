@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Task } from 'src/app/interfaces/task';
 import { User } from 'src/app/interfaces/user';
@@ -8,18 +8,18 @@ import { UserService } from 'src/app/services/user.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
-  selector: 'app-user-details',
-  templateUrl: './user-details.page.html',
-  styleUrls: ['./user-details.page.scss'],
+  selector: 'app-user-details-edit',
+  templateUrl: './user-details-edit.page.html',
+  styleUrls: ['./user-details-edit.page.scss'],
 })
 
-export class UserDetailsPage {
+export class UserDetailsEditPage {
 
   user: User = {} as User
 
   constructor(
     public userService: UserService,
-    public authService: AuthService,
+    private authService: AuthService,
     private router: Router,
     private utils: UtilsService,
     private fireStorageService: FireStorageService
@@ -33,10 +33,6 @@ export class UserDetailsPage {
   taskDateLimitLength: number
   taskCompletedLength: number
   taskDateLimitOverLength: number
-
-  goToEditPage() {
-    this.router.navigateByUrl('/user-details-edit')
-  }
 
   async ionViewWillEnter() {
     this.user = await this.userService.getUser()
@@ -55,12 +51,32 @@ export class UserDetailsPage {
     console.log(this.user)
   }
 
+  async changeProfilePicture() {
+    const file = await this.utils.requestFile() as File
+
+    this.user.image = this.userService.loadingImage
+
+    const [url, uploadFileError] = await this.utils.promiseWrapper(
+      this.fireStorageService.uploadFile(file, 'images', `${file.name} - ${Date.now()}`)
+    )
+
+    if (uploadFileError) {
+      this.utils.alert({
+        header: 'Network Error',
+        message: 'An error has accurred uploading the image'
+      })
+
+      return
+    }
+
+    this.user.image = url
+  }
+
   getDateLimitTaskLength() {
     return this.tasks.filter(task => {
       if (task.completed) return false
-      if (typeof task.dateLimit !== 'number') return false
 
-      return task.dateLimit > Date.now()
+      return typeof task.dateLimit === 'number'
     }).length
   }
 
@@ -69,12 +85,23 @@ export class UserDetailsPage {
       if (task.completed) return false
       if (typeof task.dateLimit !== 'number') return false
 
-      return task.dateLimit <= Date.now()
+      return task.dateLimit < Date.now()
     }).length
   }
 
   getCompletedTasksLength() {
     return this.tasks.filter(task => task.completed).length
+  }
+
+  saveChanges() {
+    this.userService.updateUser(this.user)
+    .then(() => this.router.navigateByUrl('/user-details'))
+    .catch(() => {
+      this.utils.alert({
+        header: 'Unexpected Error',
+        message: 'An error ocurred'
+      })
+    })
   }
 
 }

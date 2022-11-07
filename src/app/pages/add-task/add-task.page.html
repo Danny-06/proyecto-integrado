@@ -11,7 +11,10 @@
         <ion-textarea class="task-description" placeholder="Description (optional)" [(ngModel)]="task.description"></ion-textarea>
 
         <label style="align-self: flex-start;">Date Limit</label>
-        <ion-input class="task-date-limit" readonly type="text" [(ngModel)]="dateLimit" (click)="showDateLimitPicker()"></ion-input>
+        <ion-item class="task-date-limit">
+            <ion-input readonly type="text" [(ngModel)]="dateLimit" (click)="showDateLimitPicker()"></ion-input>
+            <ion-icon name="calendar-outline"></ion-icon>
+        </ion-item>
 
         <ion-button class="add-task" (click)="addTask()">Add Task</ion-button>
 
