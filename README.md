@@ -24,7 +24,8 @@ puede agregar a otros usuarios y ver sus tareas.
 ## Registro
 
 # Bibliografía
-
+https://capacitorjs.com/docs/guides/push-notifications-firebase
+https://enappd.com/blog/how-to-implement-firebase-push-notifications-in-ionic-apps/157/
 
 # Semana 1
 Registro y Login completados.<br>
