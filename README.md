@@ -32,5 +32,9 @@ Editar Tareas. Borrar imágenes.
 Enlace de la APK.
 
 # Semana 2
-Añañido botón para ordenar tareas.
+Añadido botón para ordenar tareas.
 Más filtros añadidos y mejora en la visualización de estados de una tarea.
+
+# Semana 3
+Página para editar nombre y foto de perfil
+Mostrar email en perfil
