@@ -29,18 +29,18 @@ https://capacitorjs.com/docs/guides/push-notifications-firebase
 https://enappd.com/blog/how-to-implement-firebase-push-notifications-in-ionic-apps/157/
 
 # Semana 1
-Registro y Login completados.<br>
-Pagina de listado y pagina de crear tareas.
-Visualizar Tareas.<br>
-Editar Tareas. Borrar imágenes.
+Registro y Login completados<br>
+Pagina de listado y pagina de crear tareas
+Visualizar Tareas<br>
+Editar Tareas. Borrar imágenes<br>
 
-Enlace de la APK.
+Enlace de la APK
 
 # Semana 2
-Añadido botón para ordenar tareas.
-Más filtros añadidos y mejora en la visualización de estados de una tarea.
+Añadido botón para ordenar tareas<br>
+Más filtros añadidos y mejora en la visualización de estados de una tarea<br>
 
 # Semana 3
-Página para editar nombre y foto de perfil
-Mostrar email en perfil
-Mostrar otros detalles ne perfil
+Página para editar nombre y foto de perfil<br>
+Mostrar email en perfil<br>
+Mostrar otros detalles en perfil<br>
