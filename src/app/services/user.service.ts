@@ -20,7 +20,8 @@ export class UserService {
     private authService: AuthService,
     private utils: UtilsService,
     private router: Router,
-    private auth: Auth
+    private auth: Auth,
+    private storage: Storage
   ) {
 
     this.auth.onAuthStateChanged(() => {
@@ -73,14 +74,14 @@ export class UserService {
     await this.userDoesNotExistAlert()
 
     // this.authService.removeUser()
-    this.router.navigateByUrl('/register')
+    this.router.navigateByUrl('/login')
   }
 
   userDoesNotExistAlert() {
     return this.utils.alert({
       header: 'Error',
       subHeader: 'User does not exist in the database or connection failed.',
-      message: 'You will be redirected to register page.',
+      message: 'You will be redirected to login page.',
       buttons: ['Ok']
     })
   }
@@ -98,11 +99,13 @@ export class UserService {
     return setDoc(docRef, task)
   }
 
-  getTasks(): Promise<Task[]> {
+  async getTasks(): Promise<Task[]> {
     const collectionRef = collection(this.firestore, `${this.tasksPath}`)
     const observableData = collectionData(collectionRef, this.dataOptions)
 
-    return this.utils.observableToPromise(observableData)
+    const tasks = this.utils.observableToPromise(observableData)
+
+    return tasks.catch(reason => {})
   }
 
   async deleteTask(task: Task) {
