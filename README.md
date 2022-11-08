@@ -43,3 +43,4 @@ Más filtros añadidos y mejora en la visualización de estados de una tarea.
 # Semana 3
 Página para editar nombre y foto de perfil
 Mostrar email en perfil
+Mostrar otros detalles ne perfil
