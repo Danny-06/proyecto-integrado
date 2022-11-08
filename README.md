@@ -44,3 +44,4 @@ Más filtros añadidos y mejora en la visualización de estados de una tarea<br>
 Página para editar nombre y foto de perfil<br>
 Mostrar email en perfil<br>
 Mostrar otros detalles en perfil<br>
+Añadir funcionalidad offline limitada<br>
