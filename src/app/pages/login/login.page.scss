@@ -7,7 +7,11 @@
 #app-content {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  row-gap: 4rem;
+}
+
+#app-content > * {
+  flex-shrink: 0;
 }
 
 .form {
