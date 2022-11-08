@@ -40,7 +40,16 @@ export class EditTaskPage implements ViewWillEnter, ViewDidEnter {
 
     this.user = await this.userService.getUser()
 
-    if (!this.user) return this.userService.handleUserDoesNotExists()
+    if (!this.user) {
+      await this.utils.alert({
+        header: 'Cannot edit tasks while offline',
+        buttons: ['Ok']
+      })
+
+      this.router.navigateByUrl('/main')
+
+      return
+    }
 
     const tasks = await this.userService.getTasks()
     this.task   = tasks.filter(t => t.id === taskId)[0]

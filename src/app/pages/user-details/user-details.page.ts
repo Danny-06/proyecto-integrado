@@ -17,6 +17,8 @@ export class UserDetailsPage {
 
   user: User = {} as User
 
+  localUser: User
+
   constructor(
     public userService: UserService,
     public authService: AuthService,
@@ -34,7 +36,16 @@ export class UserDetailsPage {
   taskCompletedLength: number
   taskDateLimitOverLength: number
 
-  goToEditPage() {
+  async goToEditPage() {
+    if (!this.user) {
+      await this.utils.alert({
+        header: 'Cannot edit profile while offline',
+        buttons: ['Ok']
+      })
+
+      return
+    }
+
     this.router.navigateByUrl('/user-details-edit')
   }
 
@@ -43,16 +54,19 @@ export class UserDetailsPage {
 
     if (!this.user) {
       await this.userService.handleUserDoesNotExists()
-      return
+
+      this.localUser = await this.userService.getLocalUser()
     }
 
+    console.log({user: this.user, localUser: this.localUser})
+
     this.tasks = await this.userService.getTasks()
+
+    console.log(this.tasks)
 
     this.taskCompletedLength = this.getCompletedTasksLength()
     this.taskDateLimitLength = this.getDateLimitTaskLength()
     this.taskDateLimitOverLength = this.getDateLimitOverTaskLength()
-
-    console.log(this.user)
   }
 
   getDateLimitTaskLength() {

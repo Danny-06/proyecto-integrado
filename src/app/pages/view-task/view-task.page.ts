@@ -34,11 +34,16 @@ export class ViewTaskPage implements ViewWillEnter {
   async ionViewWillEnter() {
     const taskId = this.activatedRoute.snapshot.paramMap.get('id')
 
-    if (!taskId) return this.handleTaskDoesNotExist()
+    if (!taskId) {
+      this.handleTaskDoesNotExist()
+      return
+    }
 
     this.user = await this.userService.getUser()
 
-    if (!this.user) return this.userService.handleUserDoesNotExists()
+    if (!this.user) {
+      await this.userService.handleUserDoesNotExists()
+    }
 
     const tasks = await this.userService.getTasks()
     this.task   = tasks.filter(t => t.id === taskId)[0]
@@ -66,6 +71,15 @@ export class ViewTaskPage implements ViewWillEnter {
   }
 
   async toogleTaskState() {
+    if (!this.user) {
+      await this.utils.alert({
+        header: 'Cannot mark tasks as completed while offline',
+        buttons: ['Ok']
+      })
+
+      return
+    }
+
     this.task.completed = !this.task.completed
 
     await this.userService.updateTask(this.task)

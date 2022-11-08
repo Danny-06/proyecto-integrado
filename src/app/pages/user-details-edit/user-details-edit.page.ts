@@ -38,7 +38,13 @@ export class UserDetailsEditPage {
     this.user = await this.userService.getUser()
 
     if (!this.user) {
-      await this.userService.handleUserDoesNotExists()
+      await this.utils.alert({
+        header: 'Cannot edit profile while offline',
+        buttons: ['Ok']
+      })
+
+      this.router.navigateByUrl('/main')
+
       return
     }
 

@@ -6,6 +6,7 @@ import { User } from 'src/app/interfaces/user';
 import { FireNotificationsService } from 'src/app/services/fire-notifications.service';
 import { UserService } from 'src/app/services/user.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { Preferences } from '@capacitor/preferences';
 
 
 @Component({
@@ -43,11 +44,15 @@ export class MainPage implements ViewWillEnter {
 
     if (!this.user) {
       await this.userService.handleUserDoesNotExists()
-      return
     }
 
     this.tasks = await this.userService.getTasks()
     this.tasksState = [...this.tasks]
+
+    Preferences.set({
+      key: 'tasks',
+      value: JSON.stringify(this.tasks)
+    })
 
     this.sortTasksByOption(this.currentSortOption)
   }
@@ -56,15 +61,46 @@ export class MainPage implements ViewWillEnter {
     this.router.navigateByUrl(`/view-task/${task.id}`)
   }
 
-  editTask(task: Task) {
+  async editTask(task: Task) {
+    if (!this.user) {
+      await this.utils.alert({
+        header: 'Cannot edit tasks while offline',
+        buttons: ['Ok']
+      })
+
+      this.router.navigateByUrl('/main')
+
+      return
+    }
+
     this.router.navigateByUrl(`/edit-task/${task.id}`)
   }
 
-  addTask() {
+  async addTask() {
+    if (!this.user) {
+      await this.utils.alert({
+        header: 'Cannot add tasks while offline',
+        buttons: ['Ok']
+      })
+
+      this.router.navigateByUrl('/main')
+
+      return
+    }
+
     this.router.navigateByUrl('/add-task')
   }
 
   async deleteTask(task: Task) {
+    if (!this.user) {
+      await this.utils.alert({
+        header: 'Cannot delete tasks while offline',
+        buttons: ['Ok']
+      })
+
+      return
+    }
+
     await this.utils.alert({
       header: 'Task Delete',
       message: 'Are you sure you want to delete this task?',

@@ -42,7 +42,16 @@ export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
   async ionViewWillEnter() {
     this.user = await this.userService.getUser()
 
-    if (!this.user) return this.userService.handleUserDoesNotExists()
+    if (!this.user) {
+      await this.utils.alert({
+        header: 'Cannot create tasks while offline',
+        buttons: ['Ok']
+      })
+
+      this.router.navigateByUrl('/main')
+
+      return
+    }
   }
 
   ionViewDidEnter() {

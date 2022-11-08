@@ -3,14 +3,14 @@
         <ion-back-button defaultHref="/main"></ion-back-button>
         <ion-title>Profile</ion-title>
         <ion-menu-button menu="main-menu">
-            <ion-img class="user-pic" [src]="user && user.image ? user.image : userService.userPlaceholder"></ion-img>
+            <ion-img class="user-pic" [src]="user ? user.image : userService.userPlaceholder"></ion-img>
         </ion-menu-button>
     </ion-header>
     <div id="app-content">
         <div class="profileimg">
-            <ion-img [src]="user.image"></ion-img>
+            <ion-img [src]="user ? user.image : userService.userPlaceholder"></ion-img>
         </div>
-        <div class="user-item-info username">{{user.name}}</div>
+        <div class="user-item-info username">{{user ? user.name : localUser.name}}</div>
 
         <div class="user-email">{{authService.currentUser?.email}}</div>
 

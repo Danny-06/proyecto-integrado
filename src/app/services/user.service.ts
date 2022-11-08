@@ -6,6 +6,7 @@ import { User } from '../interfaces/user'
 import { Task } from '../interfaces/task';
 import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
+import { Preferences } from '@capacitor/preferences';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,7 @@ export class UserService {
     private authService: AuthService,
     private utils: UtilsService,
     private router: Router,
-    private auth: Auth,
-    private storage: Storage
+    private auth: Auth
   ) {
 
     this.auth.onAuthStateChanged(() => {
@@ -54,7 +54,25 @@ export class UserService {
 
     const user = await this.utils.observableToPromise(observableData)
 
+    if (user) {
+      const email = this.authService.currentUser.email
+
+      Preferences.set({
+        key: email,
+        value: JSON.stringify(user)
+      })
+    }
+
     return user
+  }
+
+  async getLocalUser() {
+    const email = this.authService.currentUser.email
+
+    const result = await Preferences.get({key: email})
+    const localUser = JSON.parse(result.value)
+
+    return localUser
   }
 
   addUser(user: User) {
@@ -67,21 +85,21 @@ export class UserService {
     return setDoc(docRef, user)
   }
 
-  // If user is not stored in the database
-  // show an 'ion-alert'
-  // then delete its account and redirect
-  async handleUserDoesNotExists() {
-    await this.userDoesNotExistAlert()
+  userDoesNotExistAlertDisplayed = false
 
-    // this.authService.removeUser()
-    this.router.navigateByUrl('/login')
+  async handleUserDoesNotExists() {
+    if (this.userDoesNotExistAlertDisplayed) return
+
+    this.userDoesNotExistAlertDisplayed = true
+
+    await this.userDoesNotExistAlert()
   }
 
   userDoesNotExistAlert() {
     return this.utils.alert({
       header: 'Error',
       subHeader: 'User does not exist in the database or connection failed.',
-      message: 'You will be redirected to login page.',
+      message: 'Data stored locally will be shown.',
       buttons: ['Ok']
     })
   }
@@ -105,7 +123,19 @@ export class UserService {
 
     const tasks = this.utils.observableToPromise(observableData)
 
-    return tasks.catch(reason => {})
+    const user = await this.getUser()
+
+    if (user) {
+      Preferences.set({
+        key: 'tasks',
+        value: JSON.stringify(tasks)
+      })
+    }
+
+    const result = await Preferences.get({key: 'tasks'})
+    const localTasks = JSON.parse(result.value)
+
+    return user ? tasks : localTasks
   }
 
   async deleteTask(task: Task) {
