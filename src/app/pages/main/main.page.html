@@ -8,7 +8,7 @@
     <div id="app-content">
         <div class="content">
             <div class="tasks">
-                <div class="no-tasks" *ngIf="tasksState.length === 0">There's no tasks yet</div>
+                <div class="no-tasks" *ngIf="tasksState?.length === 0">There's no tasks yet</div>
                 <div class="task {{isCompletedClass(task) + ' ' + isDateLimitOverClass(task)}}" *ngFor="let task of tasksState" (click)="viewTask(task)">
                     <div class="wrapper1">
                         <div class="task-header">

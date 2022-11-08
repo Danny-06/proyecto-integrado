@@ -30,9 +30,9 @@ export class MainPage implements ViewWillEnter {
 
   user: User
 
-  tasks: Task[] = []
+  tasks: Task[]
 
-  tasksState: Task[] = this.tasks
+  tasksState: Task[]
 
   dateLimit: string
 
