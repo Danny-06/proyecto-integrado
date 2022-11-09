@@ -50,9 +50,11 @@ export class UserDetailsPage {
   }
 
   async ionViewWillEnter() {
+    const cancelLoader = await this.utils.showLoader({message: 'Profile loading. Please wait.'})
     this.user = await this.userService.getUser()
 
     if (!this.user) {
+      cancelLoader()
       await this.userService.handleUserDoesNotExists()
 
       this.localUser = await this.userService.getLocalUser()
@@ -61,6 +63,8 @@ export class UserDetailsPage {
     console.log({user: this.user, localUser: this.localUser})
 
     this.tasks = await this.userService.getTasks()
+
+    cancelLoader()
 
     console.log(this.tasks)
 

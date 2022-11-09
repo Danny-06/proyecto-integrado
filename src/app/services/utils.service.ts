@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AlertOptions } from '@ionic/angular';
-import { resolve } from 'dns';
+import { AlertOptions, LoadingOptions } from '@ionic/angular';
 import { Observable, Observer } from 'rxjs';
 
 
@@ -32,6 +31,19 @@ export class UtilsService {
       .then(value => resolve([value, null]))
       .catch(reason => resolve([null, reason]))
     })
+  }
+
+  async showLoader(options: LoadingOptions) {
+    const ionLoading = document.createElement('ion-loading')
+    Object.assign(ionLoading, options)
+    document.body.append(ionLoading)
+
+    await ionLoading.present()
+
+    return function cancelLoader() {
+      ionLoading.classList.add('overlay-hidden')
+      ionLoading.addEventListener('transitionend', event => ionLoading.remove())
+    }
   }
 
   observableToPromise(observable: Observable<any>, multipleValues: boolean = false): Promise<any> {

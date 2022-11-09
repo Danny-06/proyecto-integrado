@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ViewWillEnter } from '@ionic/angular';
 import { Task } from 'src/app/interfaces/task';
@@ -40,14 +40,19 @@ export class MainPage implements ViewWillEnter {
   Object = window.Object
 
   async ionViewWillEnter() {
+    const cancelLoader = await this.utils.showLoader({message: 'Tasks loading. Please wait.'})
+
     this.user = await this.userService.getUser()
 
     if (!this.user) {
+      cancelLoader()
       await this.userService.handleUserDoesNotExists()
     }
 
     this.tasks = await this.userService.getTasks()
     this.tasksState = [...this.tasks]
+
+    cancelLoader()
 
     Preferences.set({
       key: 'tasks',
