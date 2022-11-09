@@ -32,6 +32,8 @@ npm-debug.log*
 /www
 /android
 
+package-lock.json
+
 # Firebase
 .firebase
 *-debug.log
