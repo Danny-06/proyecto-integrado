@@ -40,7 +40,7 @@ export class MainPage implements ViewWillEnter {
   Object = window.Object
 
   async ionViewWillEnter() {
-    const cancelLoader = await this.utils.showLoader({message: 'Tasks loading. Please wait.'})
+    const cancelLoader = await this.utils.showLoader({message: 'Tasks loading. Please wait.'}, 500)
 
     this.user = await this.userService.getUser()
 

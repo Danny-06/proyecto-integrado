@@ -50,7 +50,7 @@ export class UserDetailsPage {
   }
 
   async ionViewWillEnter() {
-    const cancelLoader = await this.utils.showLoader({message: 'Profile loading. Please wait.'})
+    const cancelLoader = await this.utils.showLoader({message: 'Profile loading. Please wait.'}, 500)
     this.user = await this.userService.getUser()
 
     if (!this.user) {

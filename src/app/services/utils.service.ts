@@ -33,14 +33,22 @@ export class UtilsService {
     })
   }
 
-  async showLoader(options: LoadingOptions) {
+  async showLoader(options: LoadingOptions, delay: number = null) {
     const ionLoading = document.createElement('ion-loading')
     Object.assign(ionLoading, options)
     document.body.append(ionLoading)
 
-    await ionLoading.present()
+    let timeoutId
+
+    if (delay === null) {
+      await ionLoading.present()
+    } else {
+      timeoutId = setTimeout(() => ionLoading.present(), delay)
+    }
 
     return function cancelLoader() {
+      clearTimeout(timeoutId)
+
       ionLoading.classList.add('overlay-hidden')
       ionLoading.addEventListener('transitionend', event => ionLoading.remove())
     }
