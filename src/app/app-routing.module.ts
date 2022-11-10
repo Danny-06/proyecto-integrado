@@ -3,7 +3,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard'
 
 const redirectUnauthorizedToRegister = () => redirectUnauthorizedTo(['register'])
-const redirectLoggedIntoList      = () => redirectLoggedInTo(['main'])
+const redirectUnauthorizedToLogin    = () => redirectUnauthorizedTo(['login'])
+const redirectLoggedIntoList         = () => redirectLoggedInTo(['main'])
 
 const routes: Routes = [
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
     path: 'main',
     loadChildren: () => import('./pages/main/main.module').then(m => m.MainPageModule),
     canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToRegister }
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'login',
@@ -31,27 +32,39 @@ const routes: Routes = [
   },
   {
     path: 'welcome',
-    loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule)
+    loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule),
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'add-task',
-    loadChildren: () => import('./pages/add-task/add-task.module').then(m => m.AddTaskPageModule)
+    loadChildren: () => import('./pages/add-task/add-task.module').then(m => m.AddTaskPageModule),
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'user-details',
-    loadChildren: () => import('./pages/user-details/user-details.module').then(m => m.UserDetailsPageModule)
+    loadChildren: () => import('./pages/user-details/user-details.module').then(m => m.UserDetailsPageModule),
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'edit-task/:id',
-    loadChildren: () => import('./pages/edit-task/edit-task.module').then(m => m.EditTaskPageModule)
+    loadChildren: () => import('./pages/edit-task/edit-task.module').then(m => m.EditTaskPageModule),
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'view-task/:id',
-    loadChildren: () => import('./pages/view-task/view-task.module').then(m => m.ViewTaskPageModule)
+    loadChildren: () => import('./pages/view-task/view-task.module').then(m => m.ViewTaskPageModule),
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'user-details-edit',
-    loadChildren: () => import('./pages/user-details-edit/user-details-edit.module').then( m => m.UserDetailsEditPageModule)
+    loadChildren: () => import('./pages/user-details-edit/user-details-edit.module').then( m => m.UserDetailsEditPageModule),
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
   }
 ];
 
