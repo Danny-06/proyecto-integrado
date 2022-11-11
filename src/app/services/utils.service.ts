@@ -54,11 +54,13 @@ export class UtilsService {
     }
   }
 
-  observableToPromise(observable: Observable<any>, multipleValues: boolean = false): Promise<any> {
+  observableToPromise<T, R extends boolean = false>(observable: Observable<T>, multipleValues: R = false as R) {
 
     return new Promise((resolve, reject) => {
 
-      if (!multipleValues) return observable.subscribe({next: resolve, error: reject})
+      if (!multipleValues) {
+        observable.subscribe({next: resolve, error: reject})
+      }
 
       const values: any[] = []
 
@@ -69,7 +71,7 @@ export class UtilsService {
       }
 
       observable.subscribe(observer)
-    })
+    }) as R extends false ? Promise<T> : Promise<T[]>
 
   }
 

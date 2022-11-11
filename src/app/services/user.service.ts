@@ -7,6 +7,7 @@ import { Task } from '../interfaces/task';
 import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import { Preferences } from '@capacitor/preferences';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,7 @@ export class UserService {
     if (!currentUser) return null
 
     const docRef = doc(this.firestore, `${this.usersPath}/${currentUser.uid}`)
-    const observableData = docData(docRef, this.dataOptions)
+    const observableData = docData(docRef, this.dataOptions) as Observable<User>
 
     const user = await this.utils.observableToPromise(observableData)
 
