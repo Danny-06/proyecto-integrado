@@ -35,10 +35,10 @@ https://github.com/Danny-06/task-manager-administrator-app
 ## Registro
 
 ### Bibliografía
-https://firebase.google.com/
-https://www.bezkoder.com/firebase-storage-angular-10-file-upload/
-https://capacitorjs.com/docs/guides/push-notifications-firebase
-https://enappd.com/blog/how-to-implement-firebase-push-notifications-in-ionic-apps/157/
+https://firebase.google.com/  
+https://www.bezkoder.com/firebase-storage-angular-10-file-upload/  
+https://capacitorjs.com/docs/guides/push-notifications-firebase  
+https://enappd.com/blog/how-to-implement-firebase-push-notifications-in-ionic-apps/157/  
 https://stackoverflow.com/questions/38800414/delete-a-specific-user-from-firebase
 
 ### Semana 1
