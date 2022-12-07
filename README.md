@@ -21,19 +21,31 @@ puede agregar a otros usuarios y ver sus tareas.
   <img width="250" src="https://user-images.githubusercontent.com/72435753/161447674-e6789a0a-2c0b-4689-ae8a-924d4639d8dc.png">
 </div>
 
+
+## API Firebase Admin (Python)
+https://github.com/Danny-06/python-firebase-admin
+
+## Admin Panel (Angular)
+https://github.com/Danny-06/task-manager-administrator-app
+
+## Landing Page
+...
+
+
 ## Registro
 
 # Bibliografía
+https://firebase.google.com/
 https://www.bezkoder.com/firebase-storage-angular-10-file-upload/
 https://capacitorjs.com/docs/guides/push-notifications-firebase
 https://enappd.com/blog/how-to-implement-firebase-push-notifications-in-ionic-apps/157/
+https://stackoverflow.com/questions/38800414/delete-a-specific-user-from-firebase
 
 # Semana 1
 Registro y Login completados<br>
 Pagina de listado y pagina de crear tareas
 Visualizar Tareas<br>
 Editar Tareas. Borrar imágenes<br>
-
 Enlace de la APK
 
 # Semana 2
