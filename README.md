@@ -58,3 +58,7 @@ Mostrar email en perfil<br>
 Mostrar otros detalles en perfil<br>
 Añadir funcionalidad offline limitada<br>
 Animación de carga añadida<br>
+
+
+
+## Capturas
