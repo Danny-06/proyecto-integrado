@@ -34,25 +34,25 @@ https://github.com/Danny-06/task-manager-administrator-app
 
 ## Registro
 
-# Bibliografía
+### Bibliografía
 https://firebase.google.com/
 https://www.bezkoder.com/firebase-storage-angular-10-file-upload/
 https://capacitorjs.com/docs/guides/push-notifications-firebase
 https://enappd.com/blog/how-to-implement-firebase-push-notifications-in-ionic-apps/157/
 https://stackoverflow.com/questions/38800414/delete-a-specific-user-from-firebase
 
-# Semana 1
+### Semana 1
 Registro y Login completados<br>
 Pagina de listado y pagina de crear tareas
 Visualizar Tareas<br>
 Editar Tareas. Borrar imágenes<br>
 Enlace de la APK
 
-# Semana 2
+### Semana 2
 Añadido botón para ordenar tareas<br>
 Más filtros añadidos y mejora en la visualización de estados de una tarea<br>
 
-# Semana 3
+### Semana 3
 Página para editar nombre y foto de perfil<br>
 Mostrar email en perfil<br>
 Mostrar otros detalles en perfil<br>
