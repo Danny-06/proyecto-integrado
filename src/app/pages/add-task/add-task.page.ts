@@ -154,4 +154,12 @@ export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
     })
   }
 
+  avoidInputSelection(event) {
+    setTimeout(() => {
+      const input = event.target.querySelector('input') ?? event.target
+      input.selectionStart = 0
+      input.selectionEnd = 0
+    })
+  }
+
 }

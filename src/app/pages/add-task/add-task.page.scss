@@ -109,6 +109,10 @@ ion-input.error {
   font-family: monospace;
 }
 
+.task-date-limit > ion-input {
+  pointer-events: none;
+}
+
 // .task-date-limit:focus-within {
 //   --highlight-background: transparent;
 //   --full-highlight-height: 0;
