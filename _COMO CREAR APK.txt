@@ -1,11 +1,10 @@
 npm install @capacitor/android --force
 
 
--- Cada vez que se realicen cambios hay que borrar el proyecto de Android Studio
-   que se cree y volver a crearlo utilizando estos comandos
-
+-- Añadir plataforma si no la hay (creeará la carpeta ./android)
 ionic capacitor add android
 
+-- Actualizar projecto creado cuando se hagan cambios
 ionic capacitor sync android
 
 
