@@ -12,7 +12,7 @@
 
         <label style="align-self: flex-start;">Date Limit</label>
 
-        <ion-item class="task-date-limit" (click)="showDateLimitPicker()" (mousedown)="avoidInputSelection($event)">
+        <ion-item class="task-date-limit" (click)="showDateLimitPicker()" (mousedown)="avoidInputSelection($event)" (touchstart)="avoidInputSelection($event)">
             <ion-input readonly type="text" [(ngModel)]="dateLimit"></ion-input>
             <ion-icon name="calendar-outline"></ion-icon>
         </ion-item>
