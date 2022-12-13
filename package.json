@@ -13,7 +13,7 @@
     "android-studio": "open-android-studio.bat",
     "update-android": "ionic capacitor sync android",
     "compile-apk": "compile-apk.bat",
-    "update-and-compile": "npm run update-android && npm run compile-apk"
+    "update-and-compile-apk": "npm run update-android && npm run compile-apk"
   },
   "private": true,
   "dependencies": {
