@@ -163,7 +163,13 @@ export class EditTaskPage implements ViewWillEnter, ViewDidEnter {
 
   avoidInputSelection(event) {
     setTimeout(() => {
-      const input = event.target.querySelector('input') ?? event.target
+      const input = event.target.matches('input') ?
+                    event.target :
+                    (
+                      event.target.querySelector('input') ??
+                      event.target.parentElement.querySelector('input')
+                    )
+
       input.selectionStart = 0
       input.selectionEnd = 0
     })
