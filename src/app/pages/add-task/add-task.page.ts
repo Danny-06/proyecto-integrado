@@ -110,7 +110,7 @@ export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
   }
 
   async addImage() {
-    const imageFile = await this.utils.requestFile('image/*') as File
+    const imageFile = await this.utils.requestFile('image/*')
 
     const image = {src: this.userService.loadingImage, objectFit: 'cover'} as TaskImage
     this.task.images.push(image)

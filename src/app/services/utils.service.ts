@@ -78,7 +78,7 @@ export class UtilsService {
   /**
    * Show to the user a file picker to select a file
    */
-  requestFile(accept: string = '*/*', multiple: boolean = false): Promise<File|File[]> {
+  requestFile<R extends boolean= false>(accept: string = '*/*', multiple: R = false as R) {
     const input = document.createElement('input')
     input.type = 'file'
     input.accept = accept
@@ -88,10 +88,10 @@ export class UtilsService {
 
     return new Promise(resolve => {
       input.onchange = event => {
-        if (multiple) resolve([...input.files])
-        else          resolve(input.files[0])
+        if (multiple) resolve(Array.from(input.files ?? []))
+        else          resolve(input.files![0])
       }
-    })
+    }) as R extends false ? Promise<File> : Promise<File[]>
   }
 
   async alert(options: AlertOptions, timeout: null | number = null) {
