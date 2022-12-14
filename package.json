@@ -10,9 +10,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "android-studio": "./open-android-studio.bat",
+    "android-studio": ".\\open-android-studio.bat",
     "update-android": "ionic capacitor sync android",
-    "compile-apk": "./compile-apk.bat",
+    "compile-apk": ".\\compile-apk.bat",
     "update-and-compile-apk": "npm run update-android && npm run compile-apk"
   },
   "private": true,
