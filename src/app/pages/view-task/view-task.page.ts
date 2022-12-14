@@ -95,4 +95,18 @@ export class ViewTaskPage implements ViewWillEnter {
     }, 2500)
   }
 
+  avoidInputSelection(event) {
+    setTimeout(() => {
+      const input = event.target.matches('input') ?
+                    event.target :
+                    (
+                      event.target.querySelector('input') ??
+                      event.target.parentElement.querySelector('input')
+                    )
+
+      input.selectionStart = 0
+      input.selectionEnd = 0
+    })
+  }
+
 }
