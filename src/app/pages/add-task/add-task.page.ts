@@ -75,7 +75,7 @@ export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
     // Toggle between 'cover' and 'contain' values of 'object-fit' in 'task-images' on click
     window.addEventListener('click', event => {
       const ionImg = event.target as HTMLIonImgElement
-      if (!ionImg.matches('app-view-task ion-img.image')) return
+      if (!ionImg.matches('app-add-task ion-img.image')) return
 
       const imgObj = this.task.images.filter(img => img.src === ionImg.src)[0]
       if (imgObj.objectFit === 'cover') imgObj.objectFit = 'contain'
@@ -104,13 +104,6 @@ export class AddTaskPage implements ViewWillEnter, ViewDidEnter {
     }
 
     this.task.date = Date.now()
-    this.task.dateLimit = (() => {
-      const date = new Date(this.dateLimit).getTime()
-
-      if (isNaN(date)) return null
-
-      return date
-    })()
 
     await this.userService.addTask(this.task)
     this.router.navigateByUrl('/main')
