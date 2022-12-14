@@ -3,3 +3,61 @@
   width: 100%;
   height: 100%;
 }
+
+#app-content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+
+  font-size: 1.2rem;
+}
+
+.title {
+  align-self: center;
+
+  padding-bottom: 0.3em;
+  padding-inline: 0.4em;
+  border-bottom: solid 2px #23c2e8;
+}
+
+.icon {
+  align-self: center;
+
+  width: 70px;
+  height: 70px;
+}
+
+.description {
+  margin: 0;
+}
+
+.questions {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.8em;
+
+  padding-left: 1em;
+
+  > li > .item {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.2em;
+
+    > .question {
+      color: #84cdce;
+    }
+  
+    > .answer {
+      font-size: 0.9em;
+    }
+  }
+
+}
+
+
+.auth-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 0.5em;
+}

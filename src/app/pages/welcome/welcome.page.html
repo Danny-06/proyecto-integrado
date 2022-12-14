@@ -3,5 +3,42 @@
         <ion-back-button defaultHref="/main"></ion-back-button>
         <ion-title>Welcome</ion-title>
     </ion-header>
-    <div id="app-content"></div>
+    <div id="app-content">
+        <h1 class="title">Welcome to TaskManager</h1>
+        <img class="icon" src="./assets/icon/task-icon.png" alt="">
+        <p class="description">
+            With this app you can create an account to keep track of
+            all your tasks and handle them with different kind of
+            functions such as sorting and filtering.
+            <br><br>
+        </p>
+        <ul class="questions">
+            <li>
+                <div class="item">
+                    <strong class="question">
+                        Do you want to stablish a deadline for the task?
+                    </strong>
+                     <span class="answer">
+                         No problem, we got an option for that.
+                     </span>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <strong class="question">
+                        Do you need to include images to display info
+                        other than text?
+                    </strong>
+                    <span class="answer">
+                        We have that too!.
+                    </span>
+                </div>
+            </li>
+        </ul>
+
+        <div class="auth-buttons">
+            <ion-button class="register" (click)="goToRegister()">Go to Register</ion-button>
+            <ion-button class="login" (click)="goToLogin()">Go to Login</ion-button>
+        </div>
+    </div>
 </div>

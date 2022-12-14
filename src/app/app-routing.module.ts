@@ -9,8 +9,12 @@ const redirectLoggedIntoList         = () => redirectLoggedInTo(['main'])
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'main',
+    redirectTo: 'welcome',
     pathMatch: 'full'
+  },
+  {
+    path: 'welcome',
+    loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule),
   },
   {
     path: 'register',
@@ -29,12 +33,6 @@ const routes: Routes = [
   {
     path: 'recover-password',
     loadChildren: () => import('./pages/recover-password/recover-password.module').then(m => m.RecoverPasswordPageModule)
-  },
-  {
-    path: 'welcome',
-    loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule),
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'add-task',
@@ -62,7 +60,7 @@ const routes: Routes = [
   },
   {
     path: 'user-details-edit',
-    loadChildren: () => import('./pages/user-details-edit/user-details-edit.module').then( m => m.UserDetailsEditPageModule),
+    loadChildren: () => import('./pages/user-details-edit/user-details-edit.module').then(m => m.UserDetailsEditPageModule),
     canActivate: [AuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin }
   }
