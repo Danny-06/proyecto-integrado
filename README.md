@@ -63,9 +63,11 @@ Animación de carga añadida<br>
 
 ## Capturas
 
-[//] <> emmet string to generate below HTML
+<!--
+  emmet string to generate below HTML
 
-[//] # table>(tr>td>img[width="300"][src="./app-screenshots/screenshot-$.png"])*27
+  table>(tr>td>img[width="300"][src="./app-screenshots/screenshot-$.png"])*27
+-->
 
 <table>
     <tr>
