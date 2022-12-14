@@ -63,88 +63,89 @@ Animación de carga añadida<br>
 
 ## Capturas
 
-[//] # table>(tr>td>img[width="200"][src="./app-screenshots/screenshot-$.png"])*27
+[//] # emmet string to generate below HTML
+[//] # table>(tr>td>img[width="400"][src="./app-screenshots/screenshot-$.png"])*27
 
 <table>
     <tr>
-        <td><img src="./app-screenshots/screenshot-1.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-1.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-2.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-2.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-3.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-3.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-4.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-4.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-5.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-5.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-6.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-6.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-7.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-7.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-8.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-8.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-9.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-9.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-10.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-10.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-11.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-11.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-12.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-12.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-13.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-13.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-14.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-14.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-15.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-15.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-16.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-16.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-17.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-17.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-18.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-18.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-19.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-19.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-20.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-20.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-21.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-21.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-22.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-22.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-23.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-23.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-24.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-24.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-25.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-25.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-26.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-26.png" alt="" width="400"></td>
     </tr>
     <tr>
-        <td><img src="./app-screenshots/screenshot-27.png" alt="" width="200"></td>
+        <td><img src="./app-screenshots/screenshot-27.png" alt="" width="400"></td>
     </tr>
 </table>
