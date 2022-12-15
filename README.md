@@ -12,8 +12,11 @@ El proyecto será realizado con Ionic/Angular.
 El proposito de este proyecto es crear una aplicación
 que pueda usar cualquier persona.<br>
 En ella cada usuario
-puede manejar su propia lista de tareas (añadir, editar, borrar) y además
-puede agregar a otros usuarios y ver sus tareas.
+puede manejar su propia lista de tareas con operaciones como añadir, editar y borrar
+y además de organizar y filtar sus tareas.<br>
+Las tareas admiten establecer una fecha limite y almacenar imágenes para mostar información
+extra a parte de la descripción.<br>
+Se puede acceder a la información del perfil para cambiar tanto el nombre como la foto.
 
 <div>
   <img width="250" src="https://user-images.githubusercontent.com/72435753/161446246-d30aecaa-8374-44ff-8ea6-85f1e285608c.png">
