@@ -34,6 +34,9 @@ https://github.com/Danny-06/task-manager-administrator-app
 ## Landing Page
 https://github.com/Danny-06/landing-page-proyecto-integrado
 
+## Presentación PDF
+[Enlace](./Presentaci%C3%B3n.pdf)
+
 
 ## Registro
 
