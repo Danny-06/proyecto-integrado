@@ -37,6 +37,9 @@ https://github.com/Danny-06/landing-page-proyecto-integrado
 ## Presentación PDF
 [Enlace](./Presentaci%C3%B3n.pdf)
 
+## Video de la aplicación
+[Enlace](https://www.youtube.com/watch?v=c19govNInZA)
+
 
 ## Registro
 
